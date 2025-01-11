@@ -1,34 +1,17 @@
 theme = catppuccin-mocha
 font-family = 0xProto Nerd Font Mono
-font-size = 15
+font-size = 16
 font-thicken = true
 
-# clearing the screen
-keybind = alt+l=clear_screen
-
 # new window panes
-keybind = ctrl+a>l=new_split:right
-keybind = ctrl+a>h=new_split:left
-keybind = ctrl+a>k=new_split:up
-keybind = ctrl+a>j=new_split:down
-
-# pane split resizing
-keybind = ctrl+h=resize_split:left,10
-keybind = ctrl+l=resize_split:right,10
-keybind = ctrl+k=resize_split:up,10
-keybind = ctrl+j=resize_split:down,10
+keybind = ctrl+s>l=new_split:right
+keybind = ctrl+s>h=new_split:left
+keybind = ctrl+s>k=new_split:up
+keybind = ctrl+s>j=new_split:down
 
 # moving between panes
-keybind = ctrl+s>k=goto_split:top
-keybind = ctrl+s>j=goto_split:bottom
-keybind = ctrl+s>h=goto_split:left
-keybind = ctrl+s>l=goto_split:right
 keybind = ctrl+s>p=goto_split:previous
 keybind = ctrl+s>n=goto_split:next
 
-# toggling the fullscreen option
-keybind = ctrl+a>f=toggle_fullscreen
-
 # closing surfaces
-keybind = ctrl+a>d=close_surface
 keybind = ctrl+s>d=close_window
