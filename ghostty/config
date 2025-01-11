@@ -26,7 +26,7 @@ keybind = ctrl+s>l=goto_split:right
 keybind = ctrl+s>p=goto_split:previous
 keybind = ctrl+s>n=goto_split:next
 
-# toggling fullscreen
+# toggling the fullscreen option
 keybind = ctrl+a>f=toggle_fullscreen
 
 # closing surfaces
