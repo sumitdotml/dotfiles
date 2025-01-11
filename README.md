@@ -12,14 +12,9 @@ Currently, I mostly use:
 
 - neovim
 - ghostty (terminal)
-- (sometimes) tmux
-
-I've been using tmux way less these days since ghostty allows me to split panes as well, and frankly tmux interferes with the color schemes of neovim and me being a dude obsessed over minute details, I just had to find a way. And that way was ghostty!
+- tmux
 
 ### To-Dos
 
-- [ ] Finish configuring the LSPs in my neovim setup.
 - [ ] Add autocomplete
 - [ ] My neovim environment could look better (sidebar, lualine, etc. all need tweaks).
-- [ ] Normalize the bindings accorss neovim as well as ghostty.
-- [ ] some more... will think later my head hurts atm
