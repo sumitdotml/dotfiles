@@ -2,7 +2,7 @@
 
 This is still in progress. I am learning by doing this.
 
-I want to get better at doing everything inside the terminal (I really like neovim's vibes), so thi is my attempt at trying to get better at this.
+I want to get better at doing everything inside the terminal (I really like neovim's vibes), so this is my attempt at trying to get better at this.
 
 Currently, I mostly use:
 
@@ -18,22 +18,22 @@ Currently, I mostly use:
 
 1. Clone the repo
 ```zsh
-git clone https://github.com/sumitdotml/mydotfiles.git
+git clone https://github.com/sumitdotml/dotfiles.git
 
 ```
 Or ssh:
 
 ```zsh
-git clone git@github.com:sumitdotml/mydotfiles.git
+git clone git@github.com:sumitdotml/dotfiles.git
 ```
 
 2. Go to the cloned directory in your terminal
 
 ```zsh
-cd mydotfiles
+cd dotfiles
 ```
 
-3. Run this command (you need to be inside the `mydotfiles` directory:
+3. Run this command (you need to be inside the `dotfiles` directory:
 
 ```zsh
 ./install.sh
