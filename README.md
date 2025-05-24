@@ -1,16 +1,14 @@
 # My Dotfiles
 
-This is still in progress. I am learning by doing this.
+I am learning by doing this. I don't use this workflow all the time; I get into this workflow when I've finished creating a mental model of how I want to do something (say, a neural network architecture) and no longer need to ask questions to the internet (or to language models inside Cursor). Helps to keep me away from distractions.
 
-I want to get better at doing everything inside the terminal (I really like neovim's vibes), so this is my attempt at trying to get better at this.
+I want to eventually consolidate my workflow to this, but I'm not there yet (I still use Cursor Chat to talk to language models to learn difficult concepts; I find it quite efficient). But I'm getting there.
 
-Currently, I mostly use:
+#
 
-- neovim
-- ghostty (terminal)
-- tmux
+Currently, I use Neovim, Ghostty, and tmux for my workflow.
 
-![!Screenshot of my neovim](/public/screenshot.png)
+![!Screenshot of my neovim](/assets/screenshot.png)
 
 ---
 
@@ -22,10 +20,6 @@ git clone https://github.com/sumitdotml/dotfiles.git
 
 ```
 Or ssh:
-
-```zsh
-git clone git@github.com:sumitdotml/dotfiles.git
-```
 
 2. Go to the cloned directory in your terminal
 
@@ -40,10 +34,3 @@ cd dotfiles
 ```
 
 **Note**: you need to have [Ghostty](https://ghostty.org/) installed before all these steps.
-
----
-
-### To-Dos
-
-- [ ] Add autocomplete
-- [ ] My neovim environment could look better (sidebar, lualine, etc. all need tweaks).
