@@ -15,3 +15,14 @@ vim.opt.relativenumber = true -- show relative numbers
 vim.opt.cursorline      = true
 vim.opt.cursorlineopt   = 'number'   -- don't highlight the whole line, just the nr
 
+-- some keymaps
+vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
+
+-- highlighting while yanking
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight when yanking (copying) text",
+	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+})

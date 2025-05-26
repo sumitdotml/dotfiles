@@ -7,7 +7,7 @@ return {
 		"MunifTanjim/nui.nvim",
 	},
 	config = function()
-		-- for revealing the Neotree to the left
+		-- for revealing the floating Neotree
 		vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal float<CR>', {})
 	end
 }
