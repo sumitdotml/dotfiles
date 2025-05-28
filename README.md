@@ -16,6 +16,8 @@ Currently, I use Neovim, Ghostty, and tmux for my workflow.
 
 ### Installation
 
+**Note**: you need to have [Ghostty](https://ghostty.org/) installed before all these steps.
+
 1. Clone the repo
 ```zsh
 git clone https://github.com/sumitdotml/dotfiles.git
@@ -27,11 +29,14 @@ git clone https://github.com/sumitdotml/dotfiles.git
 ```zsh
 cd dotfiles
 ```
+3. Make the install script executable:
 
-3. Run this command (you need to be inside the `dotfiles` directory:
+```zsh
+chmod +x install.sh
+```
+
+4. Run this command (you need to be inside the `dotfiles` directory):
 
 ```zsh
 ./install.sh
 ```
-
-**Note**: you need to have [Ghostty](https://ghostty.org/) installed before all these steps.
