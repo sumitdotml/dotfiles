@@ -41,6 +41,7 @@ local keymap = vim.keymap.set
 
 keymap("n", "<Leader><Leader>s", "<cmd>source %<CR>", { desc = "Source the changes in the neovim config" })
 keymap("i", "jk", "<Esc>", { desc = "Exit insert mode with 'jk'" })
+keymap("v", "jk", "<Esc>", { desc = "Exit visual mode with 'jk'" })
 
 -- staying in indent mode
 keymap("v", ">", ">gv", { desc = "Indent right and stay in visual mode" })
