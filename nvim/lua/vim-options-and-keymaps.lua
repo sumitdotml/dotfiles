@@ -3,7 +3,9 @@ vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
 vim.g.mapleader = " " -- <space> is my leader key
+local opts = { noremap = true, silent = true }
 
+-- =========================== VIM OPTIONS ===========================
 -- vim.wo.number = true -- for absolute line numbering
 -- vim.wo.relativenumber = true -- for relative line numbering
 
@@ -52,36 +54,20 @@ keymap("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected text up" })
 keymap("n", "J", "mzJ`z", { desc = "Join lines without moving the cursor" })
 
 -- moving to the start and end of the line
-keymap("n", "H", "^", { desc = "Move to the start of the line" })
-keymap("n", "L", "$", { desc = "Move to the end of the line" })
+keymap("n", "<leader>s", "^", opts, { desc = "Move to the start of the line" })
+keymap("n", "<leader>e", "$", opts, { desc = "Move to the end of the line" })
 
 -- visual mode from the current position to the end of the line
-keymap("n", "VL", "v$", { desc = "Select from the current position to the end of the line" })
+keymap("n", "VE", "v$", { desc = "Select from the current position to the end of the line" })
 
 -- visual mode from the current position to the start of the line
-keymap("n", "VH", "v^", { desc = "Select from the current position to the start of the line" })
+keymap("n", "VS", "v^", { desc = "Select from the current position to the start of the line" })
 
 -- visual mode for the exact word under the cursor
 keymap("n", "VW", "viw", { desc = "Select the word under the cursor" })
 
--- moving in insert mode without using the arrow keys
-keymap("i", "<C-h>", "<Left>", { desc = "Move left in insert mode" })
-keymap("i", "<C-l>", "<Right>", { desc = "Move right in insert mode" })
-keymap("i", "<C-j>", "<Down>", { desc = "Move down in insert mode" })
-keymap("i", "<C-k>", "<Up>", { desc = "Move up in insert mode" })
-keymap("i", "<C-a>", "<Home>", { desc = "Move to the start of the line in insert mode" })
-keymap("i", "<C-e>", "<End>", { desc = "Move to the end of the line in insert mode" })
-
--- Moving between words in insert mode
-keymap("i", "<C-b>", "<C-o>b", { desc = "Move to the start of the word in insert mode" })
-keymap("i", "<C-w>", "<C-o>w", { desc = "Move to the end of the word in insert mode" })
-
--- Deleting words in insert mode
-keymap("i", "<C-d>", "<C-o>dw", { desc = "Delete the word after the cursor in insert mode" })
-keymap("i", "<C-h>", "<C-o>db", { desc = "Delete the word before the cursor in insert mode" })
-
--- Deleting the whole line in insert mode
-keymap("i", "<C-u>", "<C-o>dd", { desc = "Delete the whole line in insert mode" })
-
 -- Clear the search highlight
 keymap("n", "<C-l>", ":nohlsearch<CR>", { desc = "Clear search highlight" })
+
+-- Doing undo in insert mode
+keymap("i", "<C-z>", "<C-o>u", { desc = "Undo in insert mode" })
