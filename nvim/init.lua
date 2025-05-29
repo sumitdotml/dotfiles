@@ -17,5 +17,5 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("floaterminal")
-require("vim-options")
+require("vim-options-and-keymaps")
 require("lazy").setup("plugins")

@@ -38,11 +38,23 @@ return {
 
 			lspconfig.marksman.setup({
 				capabilities = capabilities,
-			})
+			}) -- markdown
 
 			lspconfig.clangd.setup({
 				capabilities = capabilities,
-			})
+			}) -- c++
+
+			lspconfig.vimls.setup({
+				capabilities = capabilities,
+			}) -- vim
+
+			lspconfig.astro.setup({
+				capabilities = capabilities,
+			}) -- astro
+
+			lspconfig.zls.setup({
+				capabilities = capabilities,
+			}) -- zig
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
