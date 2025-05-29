@@ -77,8 +77,9 @@ keymap("i", "<C-b>", "<C-o>b", { desc = "Move to the start of the word in insert
 keymap("i", "<C-w>", "<C-o>w", { desc = "Move to the end of the word in insert mode" })
 
 -- Deleting words in insert mode
-keymap("i", "<C-d>", "<C-o>dw", { desc = "Delete the word under the cursor in insert mode" })
+keymap("i", "<C-d>", "<C-o>dw", { desc = "Delete the word after the cursor in insert mode" })
 keymap("i", "<C-h>", "<C-o>db", { desc = "Delete the word before the cursor in insert mode" })
+
 -- Deleting the whole line in insert mode
 keymap("i", "<C-u>", "<C-o>dd", { desc = "Delete the whole line in insert mode" })
 
