@@ -11,7 +11,7 @@ local opts = { noremap = true, silent = true }
 
 -- when both of the two below are true, it becomes a “hybrid” line numbering – showing
 -- relative numbers on all lines except the current line, which shows the absolute line number
-vim.opt.number = true         -- show absolute line number
+vim.opt.number = true -- show absolute line number
 vim.opt.relativenumber = true -- show relative numbers
 
 -- show a thin highlight on the line number ONLY
@@ -41,7 +41,7 @@ local keymap = vim.keymap.set
 
 keymap("n", "<Leader><Leader>s", "<cmd>source %<CR>", { desc = "Source the changes in the neovim config" })
 keymap("i", "jk", "<Esc>", { desc = "Exit insert mode with 'jk'" })
-keymap("v", "jk", "<Esc>", { desc = "Exit visual mode with 'jk'" })
+keymap("v", "jk", "<Esc>", { desc = "Exit view mode with 'jk'" })
 
 -- staying in indent mode
 keymap("v", ">", ">gv", { desc = "Indent right and stay in visual mode" })
@@ -59,13 +59,10 @@ keymap("n", "<leader>s", "^", opts, { desc = "Move to the start of the line" })
 keymap("n", "<leader>e", "$", opts, { desc = "Move to the end of the line" })
 
 -- visual mode from the current position to the end of the line
-keymap("n", "VE", "v$", { desc = "Select from the current position to the end of the line" })
+keymap("n", "ve", "v$", { desc = "Select from the current position to the end of the line" })
 
 -- visual mode from the current position to the start of the line
-keymap("n", "VS", "v^", { desc = "Select from the current position to the start of the line" })
-
--- visual mode for the exact word under the cursor
-keymap("n", "VW", "viw", { desc = "Select the word under the cursor" })
+keymap("n", "vs", "v^", { desc = "Select from the current position to the start of the line" })
 
 -- Clear the search highlight
 keymap("n", "<C-l>", ":nohlsearch<CR>", { desc = "Clear search highlight" })
