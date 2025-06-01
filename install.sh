@@ -4,6 +4,108 @@ set -e
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # --------------------------
+# Version Comparison Function
+# --------------------------
+version_compare() {
+    local version1=$1
+    local version2=$2
+    
+    # Remove 'v' prefix if present
+    version1=${version1#v}
+    version2=${version2#v}
+    
+    # Use sort -V to compare versions
+    if printf '%s\n%s\n' "$version1" "$version2" | sort -V -C; then
+        return 0  # version1 <= version2
+    else
+        return 1  # version1 > version2
+    fi
+}
+
+# --------------------------
+# Neovim Installation with Version Check
+# --------------------------
+install_neovim_with_version_check() {
+    local min_version="0.11.0"
+    
+    if command -v nvim &> /dev/null; then
+        echo "Found existing neovim installation, checking version..."
+        
+        # Get current version
+        local current_version=$(nvim --version 2>/dev/null | head -1 | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | head -1)
+        
+        if [ -z "$current_version" ]; then
+            echo "⚠️ Could not determine neovim version, proceeding with reinstallation..."
+        else
+            echo "Current neovim version: $current_version"
+            echo "Required minimum version: v$min_version"
+            
+            # Compare versions (check if current < minimum)
+            if version_compare "${current_version#v}" "$min_version"; then
+                echo "✓ Neovim version $current_version meets requirements (>= v$min_version)"
+                echo "✓ Skipping neovim installation"
+                return 0
+            else
+                echo "⚠️ Neovim version $current_version is below required v$min_version"
+                echo "🔄 Uninstalling old neovim and installing latest version..."
+                
+                # Uninstall existing neovim
+                if [[ "$OSTYPE" == "darwin"* ]]; then
+                    if command -v brew &> /dev/null; then
+                        brew uninstall neovim 2>/dev/null || true
+                    fi
+                else
+                    if command -v apt-get &> /dev/null; then
+                        sudo apt-get remove -y neovim 2>/dev/null || true
+                    elif command -v dnf &> /dev/null; then
+                        sudo dnf remove -y neovim 2>/dev/null || true
+                    elif command -v yum &> /dev/null; then
+                        sudo yum remove -y neovim 2>/dev/null || true
+                    elif command -v pacman &> /dev/null; then
+                        sudo pacman -R --noconfirm neovim 2>/dev/null || true
+                    fi
+                fi
+                echo "✓ Old neovim uninstalled"
+            fi
+        fi
+    else
+        echo "No existing neovim installation found"
+    fi
+    
+    # Install neovim
+    echo "📦 Installing latest neovim..."
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        if ! command -v brew &> /dev/null; then
+            echo "Installing Homebrew first..."
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        fi
+        brew install neovim
+    else
+        if command -v apt-get &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y neovim
+        elif command -v dnf &> /dev/null; then
+            sudo dnf install -y neovim
+        elif command -v yum &> /dev/null; then
+            sudo yum install -y neovim
+        elif command -v pacman &> /dev/null; then
+            sudo pacman -Sy --noconfirm neovim
+        else
+            echo "Unsupported package manager. Please install neovim manually."
+            exit 1
+        fi
+    fi
+    
+    # Verify installation
+    if command -v nvim &> /dev/null; then
+        local new_version=$(nvim --version 2>/dev/null | head -1 | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | head -1)
+        echo "✓ Neovim installed successfully (version: ${new_version:-'unknown'})"
+    else
+        echo "❌ Failed to install neovim. Please install it manually."
+        exit 1
+    fi
+}
+
+# --------------------------
 # Dependency Management
 # --------------------------
 install_dependency() {
@@ -73,7 +175,7 @@ echo "🚀 Starting dotfiles installation"
 
 # Check and install dependencies
 echo "🔍 Checking dependencies..."
-install_dependency "nvim" "neovim"
+install_neovim_with_version_check
 install_dependency "tmux" "tmux"
 install_dependency "git" "git"
 

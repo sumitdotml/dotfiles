@@ -12,13 +12,15 @@ Currently, I use Neovim, Ghostty, and tmux for my workflow.
 ![!ss2](/assets/screenshot2.png)
 ![!ss3](/assets/screenshot3.png)
 ![!ss4](/assets/screenshot4.png)
+
 ---
 
-### Installation
+## Installation
 
 **Note**: you need to have [Ghostty](https://ghostty.org/) installed before all these steps.
 
 1. Clone the repo
+
 ```zsh
 git clone https://github.com/sumitdotml/dotfiles.git
 
@@ -29,6 +31,7 @@ git clone https://github.com/sumitdotml/dotfiles.git
 ```zsh
 cd dotfiles
 ```
+
 3. Make the install script executable:
 
 ```zsh

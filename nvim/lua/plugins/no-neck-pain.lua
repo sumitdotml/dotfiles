@@ -3,7 +3,7 @@ return {
 	version = "*",
 	config = function()
 		require("no-neck-pain").setup({
-			width = 100,
+			width = 110,
 			fallbackOnBufferDelete = true,
 			autocmds = {
 				enableOnVimEnter = false,

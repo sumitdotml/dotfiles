@@ -8,6 +8,12 @@ return {
 	},
 	config = function()
 		-- for revealing the floating Neotree
-		vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal float<CR>', {})
-	end
+		vim.keymap.set(
+			"n",
+			"<leader>n",
+			":Neotree filesystem reveal float<CR>",
+			{ desc = "Reveal the floating Neotree" }
+		)                                                                                                            -- this is mostly for my linux machine
+		vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal float<CR>", { desc = "Reveal the floating Neotree" }) -- this is mostly for my mac
+	end,
 }
