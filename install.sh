@@ -40,8 +40,8 @@ install_neovim_with_version_check() {
             echo "Current neovim version: $current_version"
             echo "Required minimum version: v$min_version"
             
-            # Compare versions (check if current < minimum)
-            if version_compare "${current_version#v}" "$min_version"; then
+            # Compare versions (check if current >= minimum)
+            if version_compare "$min_version" "${current_version#v}"; then
                 echo "✓ Neovim version $current_version meets requirements (>= v$min_version)"
                 echo "✓ Skipping neovim installation"
                 return 0
