@@ -18,7 +18,7 @@ return {
 					-- absolute number on current line
 					CursorLineNr = {
 						-- available colors: rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky, sapphire, blue, lavender
-						fg = c.mauve
+						fg = c.mauve,
 						-- style = { "bold" }
 					},
 
