@@ -70,6 +70,13 @@ keymap("n", "<C-l>", ":nohlsearch<CR>", { desc = "Clear search highlight" })
 -- Doing undo in insert mode
 keymap("i", "<C-z>", "<C-o>u", { desc = "Undo in insert mode" })
 
+-- Custom mappings for larger increments in window size
+keymap("n", "<C-k>", ":resize +3<CR>", { desc = "Increase window size horizontally" })
+keymap("n", "<C-j", ":resize -3<CR>", { desc = "Decrease window size horizontally" })
+keymap("n", "<C-l>", ":vertical resize +3<CR>", { desc = "Increase window size vertically" })
+keymap("n", "<C-h>", ":vertical resize -3<CR>", { desc = "Decrease window size vertically" })
+
+
 -- =================== DIAGNOSTIC DEBUGGING ONLY (you can remove this if you want) ====================
 -- I did this mainly because I had issues with the floating diagnostics appearing twice ever since I updated to
 -- neovim v0.11.0, but it's been fixed (just had to remove mason-lspconfig)
