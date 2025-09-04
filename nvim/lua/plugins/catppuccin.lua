@@ -6,13 +6,13 @@ return {
 
 	opts = function()
 		require("catppuccin").setup({
-			flavour = "mocha", -- or "latte" | "frappe" | "macchiato"
+			flavour = "mocha", -- latte, frappe, macchiato, mocha
 			transparent_background = false,
 
 			custom_highlights = function(c)
 				return {
 					-- relative numbers
-					LineNrAbove = { fg = c.overlay0},
+					LineNrAbove = { fg = c.overlay0 },
 					LineNrBelow = { fg = c.overlay0 },
 
 					-- absolute number on current line
