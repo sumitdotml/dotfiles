@@ -71,10 +71,10 @@ keymap("n", "<C-l>", ":nohlsearch<CR>", { desc = "Clear search highlight" })
 keymap("i", "<C-z>", "<C-o>u", { desc = "Undo in insert mode" })
 
 -- Deleting from the current position to the end of the line
-keymap("n", "de", "d$", { desc = "Delete from the current position to the end of the line" })
+keymap("n", "<leader>de", "d$", { desc = "Delete from the current position to the end of the line" })
 
 -- Deleting from the current position to the start of the line
-keymap("n", "ds", "d^", { desc = "Delete from the current position to the start of the line" })
+keymap("n", "<leader>ds", "d0", { desc = "Delete from the current position to the start of the line" })
 
 -- ====================================================================================================
 -- =================== DIAGNOSTIC DEBUGGING ONLY (you can remove this if you want) ====================
