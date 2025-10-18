@@ -237,5 +237,5 @@ fi
 
 echo "🎉 Installation complete! Suggested next steps:"
 echo "1. Restart your terminal"
-echo "2. Run: tmux source-file ~/.tmux.conf"
+echo "2. Run: tmux source ~/.tmux.conf"
 echo "3. Launch nvim and let it install plugins"
