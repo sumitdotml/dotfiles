@@ -38,9 +38,25 @@ return {
 
 			-- lsp config for all the servers
 			lspconfig.lua_ls.setup({ capabilities = capabilities })
-			lspconfig.ts_ls.setup({ capabilities = capabilities })
-			lspconfig.pylsp.setup({ capabilities = capabilities })
-			lspconfig.mdx_analyzer.setup({ capabilities = capabilities })
+			lspconfig.astro.setup({
+				capabilities = capabilities,
+				filetypes = { "astro", "mdx" },
+				on_attach = function(client, _)
+					client.server_capabilities.definitionProvider = true
+				end,
+			})
+			-- lsp config for typescript, javascript, tsx, jsx, and mdx <3
+			lspconfig.ts_ls.setup({
+				capabilities = capabilities,
+				filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "mdx" },
+				init_options = {
+					preferences = {
+						importModuleSpecifierPreference = "relative",
+						includeInlayParameterNameHints = "all",
+					},
+				},
+			})
+			lspconfig.ruff.setup({ capabilities = capabilities }) --  python linter
 			lspconfig.marksman.setup({ capabilities = capabilities })
 			lspconfig.clangd.setup({ capabilities = capabilities })
 			lspconfig.vimls.setup({ capabilities = capabilities })
@@ -51,6 +67,7 @@ return {
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 			vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
+			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
 		end,
 	},

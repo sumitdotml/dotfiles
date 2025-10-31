@@ -5,13 +5,31 @@ vim.cmd("set shiftwidth=2")
 vim.g.mapleader = " " -- <space> is my leader key
 local opts = { noremap = true, silent = true }
 
+vim.opt.path:append("**") -- Search recursively in current directory and subdirectories
+
+-- ============================== MDX CONFIG =============================
+vim.opt.suffixesadd:append({ ".astro", ".tsx", ".ts", ".jsx", ".js", ".mdx" })
+
+vim.filetype.add({
+	extension = {
+		mdx = "mdx",
+	},
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "mdx",
+	callback = function()
+		vim.keymap.set("n", "gd", "gf", { buffer = true, desc = "Go to file (MDX fallback)" })
+	end,
+})
+
 -- =========================== VIM OPTIONS ===========================
 -- vim.wo.number = true -- for absolute line numbering
 -- vim.wo.relativenumber = true -- for relative line numbering
 
 -- when both of the two below are true, it becomes a “hybrid” line numbering – showing
 -- relative numbers on all lines except the current line, which shows the absolute line number
-vim.opt.number = true         -- show absolute line number
+vim.opt.number = true -- show absolute line number
 vim.opt.relativenumber = true -- show relative numbers
 
 -- show a thin highlight on the line number ONLY

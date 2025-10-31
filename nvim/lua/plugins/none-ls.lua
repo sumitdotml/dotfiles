@@ -11,8 +11,8 @@ return {
 				null_ls.builtins.formatting.prettier,
 				null_ls.builtins.formatting.stylua,
 				require("none-ls.diagnostics.eslint_d"), --js, ts
-				null_ls.builtins.formatting.black,    -- python
-				null_ls.builtins.formatting.isort,    -- python
+				require("none-ls.formatting.ruff"),   -- python
+				-- require("none-ls.diagnostics.ruff"),  -- python
 				null_ls.builtins.formatting.clang_format, -- c++
 			},
 		})
