@@ -29,7 +29,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- when both of the two below are true, it becomes a “hybrid” line numbering – showing
 -- relative numbers on all lines except the current line, which shows the absolute line number
-vim.opt.number = true -- show absolute line number
+vim.opt.number = true         -- show absolute line number
 vim.opt.relativenumber = true -- show relative numbers
 
 -- show a thin highlight on the line number ONLY
