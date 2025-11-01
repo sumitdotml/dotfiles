@@ -16,6 +16,13 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("vim-options-and-keymaps")
-require("floaterminal")
+-- Load core configuration
+require("config.options")
+require("config.keymaps")
+require("config.autocmds")
+
+-- Load custom modules
+require("modules.floaterminal")
+
+-- Setup lazy.nvim plugin manager
 require("lazy").setup("plugins")

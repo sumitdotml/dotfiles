@@ -1,6 +1,10 @@
 return {
 	"supermaven-inc/supermaven-nvim",
 	config = function()
+		-- Get theme-aware color from Comment highlight group
+		local comment_hl = vim.api.nvim_get_hl(0, { name = "Comment" })
+		local suggestion_color = comment_hl.fg and string.format("#%06x", comment_hl.fg) or "#909baa"
+
 		require("supermaven-nvim").setup({
 			keymaps = {
 				accept_suggestion = "<Tab>",
@@ -9,7 +13,7 @@ return {
 			},
 			ignore_filetypes = { cpp = true }, -- or { "cpp", }
 			color = {
-				suggestion_color = "#909baa",
+				suggestion_color = suggestion_color, -- Theme-aware color (fallback to #909baa)
 				cterm = 244,
 			},
 			log_level = "info",             -- set to "off" to disable logging completely

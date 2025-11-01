@@ -19,7 +19,11 @@ return {
 		})
 
 		-- Force enable on FileType
+		local render_md_group = vim.api.nvim_create_augroup("render-markdown-setup", { clear = true })
+
 		vim.api.nvim_create_autocmd("FileType", {
+			desc = "Enable render-markdown for markdown/mdx files",
+			group = render_md_group,
 			pattern = { "markdown", "mdx" },
 			callback = function()
 				require("render-markdown").enable()
@@ -27,7 +31,7 @@ return {
 				-- Set keymaps only in markdown/mdx buffers
 				vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", {
 					buffer = true,
-					desc = "Toggle Markdown Rendering",
+					desc = "Toggle markdown rendering",
 				})
 			end,
 		})
