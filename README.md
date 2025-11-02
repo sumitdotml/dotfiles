@@ -9,8 +9,11 @@ I want to eventually consolidate my workflow to this, but I'm not there yet (I s
 Currently, I use Neovim, Ghostty, and tmux for my workflow.
 
 ![!ss1](/assets/screenshot1.png)
+
 ![!ss2](/assets/screenshot2.png)
+
 ![!ss3](/assets/screenshot3.png)
+
 ![!ss4](/assets/screenshot4.png)
 
 ---
