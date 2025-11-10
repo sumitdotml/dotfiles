@@ -46,3 +46,8 @@ chmod +x install.sh
 ```zsh
 ./install.sh
 ```
+
+> [!NOTE]
+> If you want to use the [todo](./nvim/lua/modules/floatodo.lua) plugin, you will need to create a directory on the root of your project called `notes` and add a file called `todo.md` inside it (or wherever you want to store your todo list, but make sure to update the path in the plugin config).
+
+![floatodo](/assets/floatodo.png)
