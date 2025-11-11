@@ -1,6 +1,6 @@
-theme = Catppuccin Mocha
-font-family = 0xProto Nerd Font Mono
-font-size = 16
+theme = Nvim Dark
+font-family = Osaka-Mono
+font-size = 14
 font-thicken = true
 
 # new window panes
