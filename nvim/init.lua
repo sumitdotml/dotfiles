@@ -29,6 +29,5 @@ require("config.autocmds")
 -- Load custom modules
 require("modules.floaterminal")
 require("modules.floatodo").setup({})
-
 -- Setup lazy.nvim plugin manager
 require("lazy").setup("plugins")

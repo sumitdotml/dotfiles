@@ -82,8 +82,12 @@ return {
       -- Markdown
       setup_lsp("marksman")
 
-      -- Clangd (C/C++)
-      setup_lsp("clangd")
+      -- Clangd (C/C++) - prefer Homebrew LLVM for CUDA support, fall back to system
+      local homebrew_clangd = "/opt/homebrew/opt/llvm/bin/clangd"
+      local clangd_cmd = vim.fn.executable(homebrew_clangd) == 1 and homebrew_clangd or "clangd"
+      setup_lsp("clangd", {
+        cmd = { clangd_cmd },
+      })
 
       -- VimLS (VimScript)
       setup_lsp("vimls")
