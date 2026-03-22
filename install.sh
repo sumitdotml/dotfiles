@@ -184,8 +184,8 @@ echo "📝 Installing Neovim config..."
 NVIM_TARGET="$HOME/.config/nvim"
 backup_dir "$NVIM_TARGET"
 mkdir -p "$HOME/.config"
-cp -r "$DOTFILES_DIR/nvim" "$NVIM_TARGET"
-echo "✓ Neovim configuration installed"
+ln -s "$DOTFILES_DIR/nvim" "$NVIM_TARGET"
+echo "✓ Neovim configuration symlinked"
 
 # Ghostty configuration
 echo "👻 Installing Ghostty config..."
@@ -200,16 +200,16 @@ fi
 
 mkdir -p "$(dirname "$GHOSTTY_TARGET")"
 backup_file "$GHOSTTY_TARGET"
-cp "$GHOSTTY_SRC" "$GHOSTTY_TARGET"
-echo "✓ Ghostty config installed to $GHOSTTY_TARGET"
+ln -s "$GHOSTTY_SRC" "$GHOSTTY_TARGET"
+echo "✓ Ghostty config symlinked to $GHOSTTY_TARGET"
 
 # Tmux configuration
 echo "🎨 Installing tmux config..."
 TMUX_CONF_SRC="$DOTFILES_DIR/tmux/.tmux.conf"
 TMUX_CONF_TARGET="$HOME/.tmux.conf"
 backup_file "$TMUX_CONF_TARGET"
-cp "$TMUX_CONF_SRC" "$TMUX_CONF_TARGET"
-echo "✓ tmux configuration installed"
+ln -s "$TMUX_CONF_SRC" "$TMUX_CONF_TARGET"
+echo "✓ tmux configuration symlinked"
 
 # Catppuccin theme setup
 echo "🖌️ Setting up Catppuccin theme..."
