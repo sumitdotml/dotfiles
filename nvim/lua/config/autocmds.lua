@@ -7,11 +7,45 @@
 local highlight_group = vim.api.nvim_create_augroup("highlight-yank", { clear = true })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = highlight_group,
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+  desc = "Highlight when yanking (copying) text",
+  group = highlight_group,
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
+-- ==================== Subtle Color Column Highlight ====================
+-- Override ColorColumn after any colorscheme loads to keep it subtle
+
+local colorcolumn_hl_group = vim.api.nvim_create_augroup("colorcolumn-highlight", { clear = true })
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  desc = "Set subtle ColorColumn highlight",
+  group = colorcolumn_hl_group,
+  callback = function()
+    vim.api.nvim_set_hl(0, "VirtColumnLine", { fg = "#313244" })
+  end,
+})
+
+-- ==================== Color Column Per Language ====================
+-- Override the default colorcolumn (80) for specific languages
+
+local colorcolumn_group = vim.api.nvim_create_augroup("colorcolumn-per-lang", { clear = true })
+
+local colorcolumn_rules = {
+  python = "88",
+  zig = "100",
+  markdown = "100",
+  mdx = "100",
+}
+
+vim.api.nvim_create_autocmd("FileType", {
+  desc = "Set language-specific colorcolumn",
+  group = colorcolumn_group,
+  pattern = vim.tbl_keys(colorcolumn_rules),
+  callback = function(args)
+    vim.opt_local.colorcolumn = colorcolumn_rules[args.match]
+  end,
 })
 
 -- ==================== MDX Filetype Configuration ====================
@@ -21,13 +55,13 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 local mdx_group = vim.api.nvim_create_augroup("mdx-config", { clear = true })
 
 vim.api.nvim_create_autocmd("FileType", {
-	desc = "MDX-specific keymaps (gd -> gf for file navigation)",
-	group = mdx_group,
-	pattern = "mdx",
-	callback = function()
-		vim.keymap.set("n", "gd", "gf", {
-			buffer = true,
-			desc = "Go to file (MDX fallback for gd)"
-		})
-	end,
+  desc = "MDX-specific keymaps (gd -> gf for file navigation)",
+  group = mdx_group,
+  pattern = "mdx",
+  callback = function()
+    vim.keymap.set("n", "gd", "gf", {
+      buffer = true,
+      desc = "Go to file (MDX fallback for gd)"
+    })
+  end,
 })
