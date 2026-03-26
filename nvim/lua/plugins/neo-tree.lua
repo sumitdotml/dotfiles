@@ -15,5 +15,6 @@ return {
 			{ desc = "Reveal the floating Neotree" }
 		)                                                                                                            -- this is mostly for my linux machine
 		vim.keymap.set("n", "<C-n>", ":Neotree filesystem reveal float<CR>", { desc = "Reveal the floating Neotree" }) -- this is mostly for my mac
+    vim.keymap.set("n", "<C-h>", ":Neotree filesystem reveal left<CR>", { desc = "Reveal the Neotree on the left" }) -- for my mac too
 	end,
 }
