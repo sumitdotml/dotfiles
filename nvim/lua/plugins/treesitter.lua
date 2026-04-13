@@ -1,14 +1,12 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	config = function()
+	opts = {
+		ensure_installed = { "markdown", "markdown_inline", "tsx", "typescript" },
+		auto_install = true,
+	},
+	config = function(_, opts)
 		vim.treesitter.language.register("tsx", "mdx")
-		local config = require("nvim-treesitter.configs")
-		config.setup({
-			ensure_installed = { "markdown", "markdown_inline", "tsx", "typescript" },
-			auto_install = true,
-			highlight = { enable = true },
-			indent = { enable = true },
-		})
+		require("nvim-treesitter").setup(opts)
 	end,
 }
