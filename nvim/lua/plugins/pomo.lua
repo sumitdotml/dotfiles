@@ -22,7 +22,8 @@ return {
     opts = function()
       local uname = vim.loop.os_uname()
       local is_wsl = uname.release:lower():find("microsoft") ~= nil
-      local has_system_notifier = uname.sysname == "Darwin"
+      local is_macos = uname.sysname == "Darwin"
+      local has_system_notifier = is_macos
           or (uname.sysname == "Linux" and not is_wsl)
 
       local notifiers = {
@@ -37,6 +38,21 @@ return {
       }
       if has_system_notifier then
         table.insert(notifiers, { name = "System" })
+      end
+      if is_macos then
+        local sound = "/System/Library/Sounds/Hero.aiff"
+        table.insert(notifiers, {
+          init = function()
+            return {
+              tick = function() end,
+              start = function() end,
+              stop = function() end,
+              done = function()
+                vim.system({ "afplay", sound }, { detach = true })
+              end,
+            }
+          end,
+        })
       end
 
       return {
