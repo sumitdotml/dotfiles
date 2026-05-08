@@ -235,7 +235,42 @@ else
     echo "⚠️ Catppuccin config file not found - customization skipped"
 fi
 
+# Kitty configuration
+echo "🐱 Installing Kitty config..."
+KITTY_SRC="$DOTFILES_DIR/kitty/kitty.conf"
+KITTY_TARGET="$HOME/.config/kitty/kitty.conf"
+mkdir -p "$HOME/.config/kitty"
+backup_file "$KITTY_TARGET"
+ln -s "$KITTY_SRC" "$KITTY_TARGET"
+echo "✓ Kitty config symlinked"
+
+# Vim configuration
+echo "📝 Installing Vim config..."
+VIM_DIR="$DOTFILES_DIR/vim"
+
+backup_file "$HOME/.vimrc"
+ln -s "$VIM_DIR/vimrc" "$HOME/.vimrc"
+echo "✓ .vimrc symlinked"
+
+mkdir -p "$HOME/.vim/colors"
+backup_file "$HOME/.vim/coc-settings.json"
+ln -s "$VIM_DIR/coc-settings.json" "$HOME/.vim/coc-settings.json"
+echo "✓ coc-settings.json symlinked"
+
+backup_file "$HOME/.vim/colors/kanagawa.vim"
+ln -s "$VIM_DIR/colors/kanagawa.vim" "$HOME/.vim/colors/kanagawa.vim"
+echo "✓ kanagawa colorscheme symlinked"
+
+# Install vim-plug if missing
+if [ ! -f "$HOME/.vim/autoload/plug.vim" ]; then
+    echo "📦 Installing vim-plug..."
+    curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    echo "✓ vim-plug installed"
+fi
+
 echo "🎉 Installation complete! Suggested next steps:"
 echo "1. Restart your terminal"
 echo "2. Run: tmux source ~/.tmux.conf"
 echo "3. Launch nvim and let it install plugins"
+echo "4. Launch vim and run :PlugInstall to install coc.nvim"
