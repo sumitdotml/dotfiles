@@ -1,0 +1,24 @@
+{
+  "suggest.noselect": true,
+  "suggest.enablePreview": true,
+  "diagnostic.enableSign": true,
+  "diagnostic.errorSign": "E",
+  "diagnostic.warningSign": "W",
+  "diagnostic.infoSign": "I",
+
+  "pyright.inlayHints.variableTypes": false,
+  "pyright.inlayHints.functionReturnTypes": false,
+  "python.analysis.typeCheckingMode": "basic",
+
+  "clangd.arguments": ["--background-index", "--clang-tidy"],
+
+  "tsserver.implicitProjectConfig.checkJs": true,
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "javascript.inlayHints.parameterNames.enabled": "literals",
+
+  "eslint.autoFixOnSave": true,
+  "eslint.packageManager": "npm",
+
+  "prettier.requireConfig": false,
+  "prettier.singleQuote": true
+}

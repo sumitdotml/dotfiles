@@ -1,0 +1,75 @@
+" ── appearance ──────────────────────────────────────────────────────────────
+set termguicolors
+colorscheme kanagawa
+
+" ── core settings ────────────────────────────────────────────────────────────
+set hidden          " switch buffers without saving
+set nobackup
+set nowritebackup
+set updatetime=300  " faster CursorHold (needed for coc diagnostics)
+set signcolumn=yes  " always show; prevents layout shifts
+set shortmess+=c    " suppress completion messages
+
+" ── plugins ──────────────────────────────────────────────────────────────────
+call plug#begin('~/.vim/plugged')
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#end()
+
+" Auto-install these coc extensions on first launch
+let g:coc_global_extensions = [
+      \ 'coc-pyright',
+      \ 'coc-clangd',
+      \ 'coc-tsserver',
+      \ 'coc-json',
+      \ 'coc-html',
+      \ 'coc-css',
+      \ 'coc-eslint',
+      \ 'coc-prettier',
+      \ ]
+
+" ── completion ───────────────────────────────────────────────────────────────
+" Tab: cycle forward through menu; if no menu, insert tab
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ <SID>check_backspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Enter: confirm selection
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+      \: "\<C-g>u\<CR>\<C-r>=coc#on_enter()\<CR>"
+
+function! s:check_backspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1] =~# '\s'
+endfunction
+
+" ── diagnostics ──────────────────────────────────────────────────────────────
+nmap <silent> [d <Plug>(coc-diagnostic-prev)
+nmap <silent> ]d <Plug>(coc-diagnostic-next)
+
+" ── LSP navigation ───────────────────────────────────────────────────────────
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" K: hover docs (falls back to normal K if LSP has no hover)
+nnoremap <silent> K :call <SID>show_docs()<CR>
+function! s:show_docs() abort
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" ── code actions ─────────────────────────────────────────────────────────────
+nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>ca <Plug>(coc-codeaction-cursor)
+xmap <leader>ca <Plug>(coc-codeaction-selected)
+nmap <leader>f  <Plug>(coc-format)
+xmap <leader>f  <Plug>(coc-format-selected)
+
+" ── highlights on cursor hold ─────────────────────────────────────────────────
+autocmd CursorHold * silent call CocActionAsync('highlight')
