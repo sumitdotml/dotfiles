@@ -1,15 +1,30 @@
+local parsers = { "markdown", "markdown_inline", "tsx", "typescript" }
+
 return {
 	"nvim-treesitter/nvim-treesitter",
-	branch = "master",
-	build = ":TSUpdate",
+	branch = "main",
+	lazy = false,
+	build = function()
+		require("nvim-treesitter").install(parsers):wait(300000)
+	end,
 	opts = {
-		ensure_installed = { "markdown", "markdown_inline", "tsx", "typescript" },
-		auto_install = true,
-		highlight = { enable = true },
-		indent = { enable = true },
+		ensure_installed = parsers,
 	},
 	config = function(_, opts)
 		vim.treesitter.language.register("tsx", "mdx")
-		require("nvim-treesitter.configs").setup(opts)
+
+		local treesitter = require("nvim-treesitter")
+
+		treesitter.setup()
+		treesitter.install(opts.ensure_installed)
+
+		vim.api.nvim_create_autocmd("FileType", {
+			group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
+			pattern = { "markdown", "mdx", "typescript", "typescriptreact" },
+			callback = function()
+				pcall(vim.treesitter.start)
+				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end,
+		})
 	end,
 }
