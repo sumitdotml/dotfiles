@@ -1,5 +1,10 @@
 # My Dotfiles
 
+> [!IMPORTANT]
+> This branch, `nvim-pre-0.12`, is for machines running Neovim before `0.12`.
+> It keeps `nvim-treesitter` on the legacy `master` branch because that pairing works with Neovim `0.11.x`.
+> The `main` branch of this repo targets Neovim `0.12+` and uses the rewritten `nvim-treesitter` `main` branch API instead.
+
 I am learning by doing this. I don't use this workflow all the time; I get into this workflow when I've finished creating a mental model of how I want to do something (say, a neural network architecture) and no longer need to ask questions to the internet (or to language models inside Cursor). Helps to keep me away from distractions.
 
 I want to eventually consolidate my workflow to this, but I'm not there yet (I still use Cursor Chat to talk to language models to learn difficult concepts; I find it quite efficient). But I'm getting there.
