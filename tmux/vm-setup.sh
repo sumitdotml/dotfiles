@@ -52,13 +52,17 @@ fi
 # 4. install plugins listed in vm.tmux.conf
 if [ -x "$TPM_DIR/bin/install_plugins" ]; then
     echo "4️⃣  Installing tmux plugins via tpm"
-    # install_plugins needs a tmux server; start one transiently if none exists.
-    if ! tmux info >/dev/null 2>&1; then
-        tmux new-session -d -s _vmsetup_tpm 'sleep 5'
+    # install_plugins queries the running tmux server for TMUX_PLUGIN_MANAGER_PATH,
+    # which is set by the `run '~/.tmux/plugins/tpm/tpm'` line in vm.tmux.conf.
+    # If a server is already running with an older config (or none), that variable
+    # won't be set, so sourcing the new config explicitly before invoking tpm.
+    if tmux info >/dev/null 2>&1; then
+        tmux source-file "$HOME/.tmux.conf"
+        "$TPM_DIR/bin/install_plugins"
+    else
+        tmux new-session -d -s _vmsetup_tpm 'sleep 30'
         "$TPM_DIR/bin/install_plugins" || true
         tmux kill-session -t _vmsetup_tpm 2>/dev/null || true
-    else
-        "$TPM_DIR/bin/install_plugins"
     fi
 fi
 
