@@ -1,4 +1,51 @@
-local parsers = { "markdown", "markdown_inline", "tsx", "typescript" }
+local parsers = {
+	"astro",
+	"bash",
+	"c",
+	"cmake",
+	"comment",
+	"cpp",
+	"css",
+	"csv",
+	"cuda",
+	"diff",
+	"dockerfile",
+	"editorconfig",
+	"git_config",
+	"git_rebase",
+	"gitattributes",
+	"gitcommit",
+	"gitignore",
+	"go",
+	"gomod",
+	"gosum",
+	"gowork",
+	"graphql",
+	"html",
+	"java",
+	"javascript",
+	"jsdoc",
+	"json",
+	"jsonc",
+	"lua",
+	"luadoc",
+	"make",
+	"markdown",
+	"markdown_inline",
+	"python",
+	"query",
+	"regex",
+	"rust",
+	"sql",
+	"tmux",
+	"toml",
+	"tsx",
+	"typescript",
+	"vim",
+	"vimdoc",
+	"xml",
+	"yaml",
+}
 
 return {
 	"nvim-treesitter/nvim-treesitter",
@@ -20,10 +67,11 @@ return {
 
 		vim.api.nvim_create_autocmd("FileType", {
 			group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
-			pattern = { "markdown", "mdx", "typescript", "typescriptreact" },
 			callback = function()
 				pcall(vim.treesitter.start)
-				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				pcall(function()
+					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				end)
 			end,
 		})
 	end,
