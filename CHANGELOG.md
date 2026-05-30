@@ -2,6 +2,27 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## [0.2.0] - 2026-05-31
+
+### Changed
+
+- Reworked `install.sh` into an interactive installer that asks before setting up dependencies, config symlinks, and the tmux Catppuccin theme customization.
+- Made config symlinking explicit for Neovim, tmux, Ghostty, Kitty, and Vim while leaving `zsh` and `cc` files unmanaged by the installer.
+- Raised the Neovim requirement for this branch to `>= 0.12.0` and added guidance to use the older branch for `<= 0.11` setups.
+- Switched Neovim installation to the official GitHub release archive instead of requiring Homebrew.
+- Kept `tree-sitter` installation on the official GitHub release binary path.
+- Unified `tree-sitter-cli` install into a single curl-based path for macOS and Linux (`install_tree_sitter_cli`), with `uname -m` arch detection for `x64`/`arm64` and an explicit failure if `tree-sitter` is not on `PATH` after the install completes.
+- Made tmux and git dependency setup platform-aware:
+  - macOS uses Homebrew or MacPorts for tmux when available, with Homebrew installation offered only when needed.
+  - Linux uses the detected system package manager (`apt`, `dnf`, `yum`, or `pacman`) for tmux and git.
+  - macOS git setup uses Apple's Xcode Command Line Tools prompt when git is missing.
+- Preserved the tmux Catppuccin `#T` to `#W` window-name customization and made it idempotent when already applied.
+
+### Fixed
+
+- Made repeated config setup safer by leaving already-correct symlinks untouched instead of backing them up and recreating them every run.
+- Replaced the previous `sort -V` Neovim version comparison with a shell-native comparison that works on default macOS.
+
 ## [0.1.0] - 2026-05-29
 
 ### Changed
@@ -30,3 +51,4 @@ All notable changes to this dotfiles repo are recorded here.
 - After switching to the `nvim-treesitter` `main` branch API, existing parser caches may need to be rebuilt if parser and query revisions are out of sync.
 - Older Linux distributions may need a locally compatible `tree-sitter` binary if upstream prebuilt binaries require a newer system C library.
 - Clearing stale Neovim compiled Lua cache can help after plugin API upgrades if old modules continue to load.
+- Homebrew has split the `tree-sitter` formula: `brew install tree-sitter` now installs only the `libtree-sitter` C library, and the CLI binary required by `nvim-treesitter` builds lives in `brew install tree-sitter-cli`. The installer's curl-based path sidesteps the split and works regardless of which (if either) brew formula is present.
