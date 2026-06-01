@@ -2,6 +2,12 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-06-01
+
+### Added
+
+- Added global Codex writing preferences in `codex/AGENTS.md` for clearer, more reader-friendly docs and research notes.
+
 ## [0.2.0] - 2026-05-31
 
 ### Changed
