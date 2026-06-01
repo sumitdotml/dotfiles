@@ -295,6 +295,52 @@ install_official_neovim_release() {
     success "Neovim official release installed"
 }
 
+active_neovim_is_homebrew() {
+    local nvim_path
+    local brew_prefix
+
+    if ! command -v nvim >/dev/null 2>&1; then
+        return 1
+    fi
+
+    if ! command -v brew >/dev/null 2>&1; then
+        return 1
+    fi
+
+    nvim_path=$(command -v nvim)
+    brew_prefix=$(brew --prefix 2>/dev/null || true)
+    [ -n "$brew_prefix" ] &&
+        [[ "$nvim_path" == "$brew_prefix"/bin/nvim ]] &&
+        brew list neovim >/dev/null 2>&1
+}
+
+upgrade_neovim_with_package_manager() {
+    local manager
+    manager=$(detect_package_manager)
+
+    case "$manager" in
+        brew)
+            if active_neovim_is_homebrew; then
+                confirm "Upgrade Neovim using Homebrew?" "y" || return 1
+                install_system_package "neovim"
+                return 0
+            fi
+            ;;
+    esac
+
+    return 1
+}
+
+uninstall_homebrew_neovim_before_official_install() {
+    if ! active_neovim_is_homebrew; then
+        return 0
+    fi
+
+    warn "Homebrew Neovim is still first on PATH. The official install will not be active unless the Homebrew package is removed."
+    confirm "Uninstall Homebrew Neovim before installing the official release?" "y" || return 1
+    brew uninstall neovim
+}
+
 install_neovim_with_version_check() {
     local current_version=""
 
@@ -318,6 +364,16 @@ install_neovim_with_version_check() {
         info "No existing Neovim installation found."
     fi
 
+    if upgrade_neovim_with_package_manager; then
+        current_version=$(get_nvim_version || true)
+        if [ -n "$current_version" ] && version_ge "$current_version" "$MIN_NVIM_VERSION"; then
+            success "Neovim upgraded successfully (v$current_version)"
+            return 0
+        fi
+        warn "Package-manager upgrade did not make Neovim >= v$MIN_NVIM_VERSION active on PATH."
+    fi
+
+    uninstall_homebrew_neovim_before_official_install || return 0
     confirm "Install Neovim from the official GitHub release archive?" "y" || return 0
     install_official_neovim_release
 

@@ -8,6 +8,11 @@ All notable changes to this dotfiles repo are recorded here.
 
 - Added global Codex writing preferences in `codex/AGENTS.md` for clearer, more reader-friendly docs and research notes.
 
+### Changed
+
+- Updated `install.sh` so Homebrew-managed Neovim installs are upgraded with Homebrew first, while missing or non-Homebrew Neovim installs continue to use the official GitHub release archive path.
+- Added a Homebrew uninstall prompt before falling back to the official Neovim release archive when the active Homebrew `nvim` would otherwise shadow the official install.
+
 ## [0.2.0] - 2026-05-31
 
 ### Changed
