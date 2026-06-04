@@ -89,7 +89,7 @@ component_label() {
         nvim) echo "Symlink Neovim config" ;;
         ghostty) echo "Symlink Ghostty config" ;;
         tmux) echo "Symlink tmux config" ;;
-        catppuccin) echo "tmux Catppuccin theme + your window-name customization" ;;
+        catppuccin) echo "tmux Catppuccin theme" ;;
         kitty) echo "Symlink Kitty config" ;;
         vim) echo "Symlink Vim config + install vim-plug" ;;
         *) echo "$1" ;;
@@ -114,7 +114,7 @@ select_components() {
         done
     fi
 
-    if confirm "Set up tmux Catppuccin theme customization?" "y"; then
+    if confirm "Set up tmux Catppuccin theme?" "y"; then
         SELECTED_COMPONENTS+=(catppuccin)
     fi
 
@@ -568,29 +568,12 @@ install_tmux_config() {
 install_catppuccin_theme() {
     section "tmux Catppuccin"
     local theme_dir="$HOME/.config/tmux/plugins/catppuccin/tmux"
-    local config_file="$theme_dir/catppuccin_options_tmux.conf"
 
     if [ ! -d "$theme_dir" ]; then
         mkdir -p "$HOME/.config/tmux/plugins/catppuccin"
         git clone -b v2.1.2 https://github.com/catppuccin/tmux.git "$theme_dir"
     else
         success "Catppuccin theme already exists"
-    fi
-
-    if [ -f "$config_file" ]; then
-        if grep -q '^set -ogq @catppuccin_window_text " #W"$' "$config_file" &&
-            grep -q '^set -ogq @catppuccin_window_current_text " #W"$' "$config_file"; then
-            success "Catppuccin window-name customization already applied"
-            return 0
-        fi
-
-        sed -i.bak \
-            -e 's/^set -ogq @catppuccin_window_text " #T"$/set -ogq @catppuccin_window_text " #W"/' \
-            -e 's/^set -ogq @catppuccin_window_current_text " #T"$/set -ogq @catppuccin_window_current_text " #W"/' \
-            "$config_file"
-        success "Catppuccin window-name customization applied"
-    else
-        warn "Catppuccin config file not found; customization skipped"
     fi
 }
 
