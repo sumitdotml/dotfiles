@@ -12,6 +12,8 @@ All notable changes to this dotfiles repo are recorded here.
 
 - Updated `install.sh` so Homebrew-managed Neovim installs are upgraded with Homebrew first, while missing or non-Homebrew Neovim installs continue to use the official GitHub release archive path.
 - Added a Homebrew uninstall prompt before falling back to the official Neovim release archive when the active Homebrew `nvim` would otherwise shadow the official install.
+- Polished the tmux SSH badge spacing in the main `.tmux.conf` file, switched it to the Catppuccin Mocha sapphire palette, and tightened the left status length.
+- Moved the tmux Catppuccin `#W` window-name override into `.tmux.conf` so the installer no longer edits plugin files.
 
 ## [0.2.0] - 2026-05-31
 
