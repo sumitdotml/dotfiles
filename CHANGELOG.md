@@ -2,6 +2,12 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-06-18
+
+### Changed
+
+- Set Neovim C formatting to use a 100-column clang-format style via null-ls.
+
 ## 2026-06-01
 
 ### Added

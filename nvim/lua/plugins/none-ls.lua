@@ -13,10 +13,25 @@ return {
 				require("none-ls.diagnostics.eslint_d"), --js, ts
 				require("none-ls.formatting.ruff"),   -- python
 				-- require("none-ls.diagnostics.ruff"),  -- python
-				null_ls.builtins.formatting.clang_format, -- c++
+				null_ls.builtins.formatting.clang_format.with({
+					filetypes = { "c" },
+					extra_args = { "--style={BasedOnStyle: LLVM, ColumnLimit: 100}" },
+				}), -- c
 			},
 		})
 
-		vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+		vim.keymap.set("n", "<leader>gf", function()
+			local bufnr = vim.api.nvim_get_current_buf()
+			local has_null_ls = vim.iter(vim.lsp.get_clients({ bufnr = bufnr })):any(function(client)
+				return client.name == "null-ls" and client.supports_method("textDocument/formatting")
+			end)
+
+			vim.lsp.buf.format({
+				bufnr = bufnr,
+				filter = has_null_ls and function(client)
+					return client.name == "null-ls"
+				end or nil,
+			})
+		end, {})
 	end,
 }
