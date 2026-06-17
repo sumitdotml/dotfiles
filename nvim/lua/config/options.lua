@@ -24,7 +24,7 @@ vim.opt.number = true         -- Show absolute line number on current line
 vim.opt.relativenumber = true -- Show relative numbers on other lines
 
 -- Color column (vertical line guide)
-vim.opt.colorcolumn = "80" -- Default for all filetypes
+vim.opt.colorcolumn = "80,100" -- Default for all filetypes
 
 -- Cursor line highlighting
 vim.opt.cursorline = true        -- Enable cursor line highlighting

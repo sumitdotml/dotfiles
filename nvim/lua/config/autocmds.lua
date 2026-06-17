@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 })
 
 -- ==================== Color Column Per Language ====================
--- Override the default colorcolumn (80) for specific languages
+-- Override the default colorcolumn (80,100) for specific languages
 
 local colorcolumn_group = vim.api.nvim_create_augroup("colorcolumn-per-lang", { clear = true })
 
