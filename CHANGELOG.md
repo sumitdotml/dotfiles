@@ -2,6 +2,16 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-06-24
+
+### Changed
+
+- Updated Neovim plugin lockfile pins.
+
+### Fixed
+
+- Replaced the deprecated `client.supports_method()` call in the Neovim formatter mapping with `client:supports_method()`.
+
 ## 2026-06-18
 
 ### Changed

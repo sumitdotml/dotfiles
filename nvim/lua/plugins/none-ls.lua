@@ -23,7 +23,7 @@ return {
 		vim.keymap.set("n", "<leader>gf", function()
 			local bufnr = vim.api.nvim_get_current_buf()
 			local has_null_ls = vim.iter(vim.lsp.get_clients({ bufnr = bufnr })):any(function(client)
-				return client.name == "null-ls" and client.supports_method("textDocument/formatting")
+				return client.name == "null-ls" and client:supports_method("textDocument/formatting")
 			end)
 
 			vim.lsp.buf.format({
