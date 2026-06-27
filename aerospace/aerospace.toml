@@ -1,0 +1,139 @@
+config-version = 2
+
+start-at-login = true
+after-startup-command = ['exec-and-forget sketchybar']
+exec-on-workspace-change = ['/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 12
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+persistent-workspaces = ["1", "2", "3", "4", "5"]
+
+[workspace-to-monitor-force-assignment]
+    1 = 'main'
+    2 = 'main'
+    3 = 'main'
+    4 = 'secondary'
+    5 = 'secondary'
+
+[key-mapping]
+    preset = 'qwerty'
+
+[gaps]
+    inner.horizontal = 10
+    inner.vertical   = 10
+    outer.left       = [{ monitor.'built-in' = 10 }, 14]
+    outer.bottom     = [{ monitor.'built-in' = 10 }, 14]
+    # keeping this lower because notched built-in displays already reserve menu bar space
+    outer.top        = [{ monitor.'built-in' = 8 }, 40]
+    outer.right      = [{ monitor.'built-in' = 10 }, 14]
+
+# Ghostty
+[[on-window-detected]]
+    if.app-id = 'com.mitchellh.ghostty'
+    run = 'move-node-to-workspace 1'
+
+# Cursor
+[[on-window-detected]]
+    if.app-id = 'com.todesktop.230313mzl4w4u92'
+    run = 'move-node-to-workspace 1'
+
+# Claude
+[[on-window-detected]]
+    if.app-id = 'com.anthropic.claudefordesktop'
+    run = 'move-node-to-workspace 1'
+
+# Codex
+[[on-window-detected]]
+    if.app-id = 'com.openai.codex'
+    run = 'move-node-to-workspace 1'
+
+# Helium
+[[on-window-detected]]
+    if.app-id = 'net.imput.helium'
+    run = 'move-node-to-workspace 2'
+
+# Spotify
+[[on-window-detected]]
+    if.app-id = 'com.spotify.client'
+    run = 'move-node-to-workspace 4'
+
+# Finder
+[[on-window-detected]]
+    if.app-id = 'com.apple.finder'
+    run = 'layout floating'
+
+# System Settings
+[[on-window-detected]]
+    if.app-id = 'com.apple.systempreferences'
+    run = 'layout floating'
+
+# Wispr Flow
+[[on-window-detected]]
+    if.app-id = 'com.electron.wispr-flow'
+    run = 'layout floating'
+
+[mode.main.binding]
+    alt-enter = 'exec-and-forget open -a Ghostty'
+
+    alt-slash     = 'layout h_tiles'
+    alt-backslash = 'layout v_tiles'
+    alt-comma     = 'layout accordion horizontal vertical'
+
+    alt-h = 'focus --ignore-floating left'
+    alt-j = 'focus --ignore-floating down'
+    alt-k = 'focus --ignore-floating up'
+    alt-l = 'focus --ignore-floating right'
+
+    alt-shift-h = 'move left'
+    alt-shift-j = 'move down'
+    alt-shift-k = 'move up'
+    alt-shift-l = 'move right'
+
+    alt-ctrl-h = ['join-with left', 'balance-sizes']
+    alt-ctrl-j = ['join-with down', 'balance-sizes']
+    alt-ctrl-k = ['join-with up', 'balance-sizes']
+    alt-ctrl-l = ['join-with right', 'balance-sizes']
+
+    alt-minus = 'resize smart -50'
+    alt-equal = 'resize smart +50'
+
+    alt-b       = 'balance-sizes'
+    alt-shift-r = 'flatten-workspace-tree'
+
+    alt-f = 'fullscreen'
+
+    alt-1 = 'workspace 1'
+    alt-2 = 'workspace 2'
+    alt-3 = 'workspace 3'
+    alt-4 = 'workspace 4'
+    alt-5 = 'workspace 5'
+
+    alt-shift-1 = 'move-node-to-workspace 1'
+    alt-shift-2 = 'move-node-to-workspace 2'
+    alt-shift-3 = 'move-node-to-workspace 3'
+    alt-shift-4 = 'move-node-to-workspace 4'
+    alt-shift-5 = 'move-node-to-workspace 5'
+
+    alt-tab = 'workspace-back-and-forth'
+    alt-shift-tab = 'focus-monitor --wrap-around next'
+    alt-ctrl-shift-tab = 'move-node-to-monitor --wrap-around --focus-follows-window next'
+
+    alt-shift-space = 'layout floating tiling'
+    alt-shift-c = 'reload-config'
+    alt-shift-semicolon = 'mode service'
+
+[mode.service.binding]
+    esc       = ['reload-config', 'mode main']
+    r         = ['flatten-workspace-tree', 'mode main']
+    backspace = ['close-all-windows-but-current', 'mode main']
+
+    alt-shift-h = ['join-with left', 'mode main']
+    alt-shift-j = ['join-with down', 'mode main']
+    alt-shift-k = ['join-with up', 'mode main']
+    alt-shift-l = ['join-with right', 'mode main']
