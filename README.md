@@ -56,6 +56,20 @@ The installer is interactive and asks which dependencies and config symlinks you
 
 ---
 
+## macOS desktop setup (optional)
+
+This is separate from the main installer because it changes the desktop/window-manager look: sketchybar, JankyBorders, AeroSpace, and the menubar helper.
+
+Run:
+
+```zsh
+./scripts/install-macos-desktop.sh
+```
+
+It symlinks the desktop configs from `sketchybar/`, `borders/`, `aerospace/`, and `wm/`, backs up existing files before replacing them, restarts sketchybar and JankyBorders, and asks AeroSpace to reload its config.
+
+---
+
 ## Linux GPU setup (optional)
 
 For Linux boxes with `nvidia-smi` available (a workstation with a desktop GPU, a cloud/lab VM, etc.). The main `install.sh` is mac-oriented and would brew/apt install dependencies that don't always make sense on a shared remote box, so this stays a separate path.

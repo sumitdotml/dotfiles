@@ -2,6 +2,17 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-06-28
+
+### Added
+
+- Added a separate macOS desktop installer for the AeroSpace, sketchybar, JankyBorders, and menubar helper configs.
+- Added source-managed AeroSpace, sketchybar, JankyBorders, and menubar helper files.
+
+### Changed
+
+- Documented the macOS desktop setup as an optional path outside the main installer.
+
 ## 2026-06-24
 
 ### Changed
