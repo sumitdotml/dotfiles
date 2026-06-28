@@ -8,10 +8,16 @@ All notable changes to this dotfiles repo are recorded here.
 
 - Added a separate macOS desktop installer for the AeroSpace, sketchybar, JankyBorders, and menubar helper configs.
 - Added source-managed AeroSpace, sketchybar, JankyBorders, and menubar helper files.
+- Added the Catppuccin landscape wallpaper collection and credits for macOS desktop/lockscreen rotation.
+- Added LaunchAgent-backed daily wallpaper rotation for the macOS desktop and lockscreen.
 
 ### Changed
 
 - Documented the macOS desktop setup as an optional path outside the main installer.
+- Tuned AeroSpace gaps, keybindings, and workspace placement for the macOS desktop setup.
+- Improved sketchybar front-app and weather widgets for cleaner reload behavior.
+- Rebuild macOS helper binaries when their source files are newer than the existing outputs.
+- Applied the rotating macOS theme from the desktop installer.
 
 ## 2026-06-24
 
