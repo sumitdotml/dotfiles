@@ -6,6 +6,9 @@ SKETCHYBAR_DIR="$DOTFILES_DIR/sketchybar"
 AEROSPACE_DIR="$DOTFILES_DIR/aerospace"
 BORDERS_DIR="$DOTFILES_DIR/borders"
 WM_DIR="$DOTFILES_DIR/wm"
+THEME_AGENT_LABEL="ml.sumit.macos-theme"
+THEME_AGENT_PATH="$HOME/Library/LaunchAgents/$THEME_AGENT_LABEL.plist"
+THEME_LOG_DIR="$HOME/Library/Logs/dotfiles"
 
 if [ -t 1 ] && command -v tput >/dev/null 2>&1 && [ "$(tput colors 2>/dev/null || echo 0)" -ge 8 ]; then
     BOLD="$(tput bold)"
@@ -88,7 +91,7 @@ compile_helper() {
     local output=$2
     shift 2
 
-    if [ -x "$output" ]; then
+    if [ -x "$output" ] && [ "$output" -nt "$source" ]; then
         success "$output already built"
         return 0
     fi
@@ -161,6 +164,53 @@ reload_services() {
     fi
 }
 
+apply_theme() {
+    section "Theme"
+    "$DOTFILES_DIR/scripts/apply-macos-theme.sh" || warn "Could not apply macOS theme"
+}
+
+install_theme_agent() {
+    section "Wallpaper Rotation"
+
+    mkdir -p "$(dirname "$THEME_AGENT_PATH")"
+    mkdir -p "$THEME_LOG_DIR"
+    cat > "$THEME_AGENT_PATH" <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>$THEME_AGENT_LABEL</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>$DOTFILES_DIR/scripts/apply-macos-theme.sh</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>4</integer>
+        <key>Minute</key>
+        <integer>5</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>$THEME_LOG_DIR/macos-theme.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>$THEME_LOG_DIR/macos-theme.err.log</string>
+</dict>
+</plist>
+PLIST
+
+    launchctl bootout "gui/$(id -u)" "$THEME_AGENT_PATH" >/dev/null 2>&1 || true
+    if launchctl bootstrap "gui/$(id -u)" "$THEME_AGENT_PATH"; then
+        success "daily wallpaper rotation installed"
+    else
+        warn "Could not load daily wallpaper rotation"
+    fi
+}
+
 main() {
     if [[ "$OSTYPE" != "darwin"* ]]; then
         die "This installer is macOS-only."
@@ -172,6 +222,8 @@ main() {
 
     prepare_helpers
     link_configs
+    apply_theme
+    install_theme_agent
     reload_services
 
     section "Done"

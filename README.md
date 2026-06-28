@@ -66,7 +66,7 @@ Run:
 ./scripts/install-macos-desktop.sh
 ```
 
-It symlinks the desktop configs from `sketchybar/`, `borders/`, `aerospace/`, and `wm/`, backs up existing files before replacing them, restarts sketchybar and JankyBorders, and asks AeroSpace to reload its config.
+It symlinks the desktop configs from `sketchybar/`, `borders/`, `aerospace/`, and `wm/`, applies the daily wallpaper from `assets/macos-theme/landscapes/`, installs the wallpaper rotation LaunchAgent, backs up existing files before replacing them, restarts sketchybar and JankyBorders, and asks AeroSpace to reload its config.
 
 ---
 
