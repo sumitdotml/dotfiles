@@ -14,8 +14,6 @@ Currently, I use Neovim, Ghostty, and tmux for my workflow.
 
 ![!ss3](/assets/screenshot3.png)
 
-![!ss4](/assets/screenshot4.png)
-
 ---
 
 ## Installation
