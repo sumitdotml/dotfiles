@@ -26,11 +26,11 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
 
 [gaps]
     inner.horizontal = 10
-    inner.vertical   = 10
+    inner.vertical   = 12
     outer.left       = [{ monitor.'built-in' = 10 }, 14]
-    outer.bottom     = [{ monitor.'built-in' = 10 }, 14]
+    outer.bottom     = [{ monitor.'built-in' = 16 }, 20]
     # keeping this lower because notched built-in displays already reserve menu bar space
-    outer.top        = [{ monitor.'built-in' = 8 }, 40]
+    outer.top        = [{ monitor.'built-in' = 14 }, 46]
     outer.right      = [{ monitor.'built-in' = 10 }, 14]
 
 # Ghostty
@@ -52,11 +52,6 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
 [[on-window-detected]]
     if.app-id = 'com.openai.codex'
     run = 'move-node-to-workspace 1'
-
-# Helium
-[[on-window-detected]]
-    if.app-id = 'net.imput.helium'
-    run = 'move-node-to-workspace 2'
 
 # Spotify
 [[on-window-detected]]
@@ -103,7 +98,7 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
     alt-minus = 'resize smart -50'
     alt-equal = 'resize smart +50'
 
-    alt-b       = 'balance-sizes'
+    alt-shift-b = 'balance-sizes'
     alt-shift-r = 'flatten-workspace-tree'
 
     alt-f = 'fullscreen'
@@ -122,7 +117,7 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
 
     alt-tab = 'workspace-back-and-forth'
     alt-shift-tab = 'focus-monitor --wrap-around next'
-    alt-ctrl-shift-tab = 'move-node-to-monitor --wrap-around --focus-follows-window next'
+    alt-shift-m = 'move-node-to-monitor --wrap-around --focus-follows-window next'
 
     alt-shift-space = 'layout floating tiling'
     alt-shift-c = 'reload-config'
@@ -132,8 +127,3 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
     esc       = ['reload-config', 'mode main']
     r         = ['flatten-workspace-tree', 'mode main']
     backspace = ['close-all-windows-but-current', 'mode main']
-
-    alt-shift-h = ['join-with left', 'mode main']
-    alt-shift-j = ['join-with down', 'mode main']
-    alt-shift-k = ['join-with up', 'mode main']
-    alt-shift-l = ['join-with right', 'mode main']
