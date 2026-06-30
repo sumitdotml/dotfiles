@@ -33,11 +33,6 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
     outer.top        = [{ monitor.'built-in' = 14 }, 46]
     outer.right      = [{ monitor.'built-in' = 10 }, 14]
 
-# Ghostty
-[[on-window-detected]]
-    if.app-id = 'com.mitchellh.ghostty'
-    run = 'move-node-to-workspace 1'
-
 # Cursor
 [[on-window-detected]]
     if.app-id = 'com.todesktop.230313mzl4w4u92'
@@ -74,7 +69,7 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
     run = 'exec-and-forget "$HOME/.config/aerospace/scripts/follow-wispr-flow.sh" "$AEROSPACE_FOCUSED_WORKSPACE"'
 
 [mode.main.binding]
-    alt-enter = 'exec-and-forget open -a Ghostty'
+    alt-enter = ['workspace 1', 'exec-and-forget open -a Ghostty']
 
     alt-slash     = 'layout h_tiles'
     alt-backslash = 'layout v_tiles'

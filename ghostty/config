@@ -2,6 +2,7 @@ theme = Nvim Dark
 font-family = Osaka-Mono
 font-size = 14
 font-thicken = true
+macos-titlebar-style = tabs
 
 # new window panes
 keybind = ctrl+s>l=new_split:right
