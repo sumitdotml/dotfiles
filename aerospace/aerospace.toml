@@ -3,7 +3,7 @@ config-version = 2
 start-at-login = true
 after-startup-command = ['exec-and-forget sketchybar']
 exec-on-workspace-change = ['/bin/bash', '-c',
-    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE; "$HOME/.config/aerospace/scripts/follow-wispr-flow.sh" "$AEROSPACE_FOCUSED_WORKSPACE"'
 ]
 
 enable-normalization-flatten-containers = true
@@ -71,7 +71,7 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
 # Wispr Flow
 [[on-window-detected]]
     if.app-id = 'com.electron.wispr-flow'
-    run = 'layout floating'
+    run = 'exec-and-forget "$HOME/.config/aerospace/scripts/follow-wispr-flow.sh" "$AEROSPACE_FOCUSED_WORKSPACE"'
 
 [mode.main.binding]
     alt-enter = 'exec-and-forget open -a Ghostty'

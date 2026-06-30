@@ -134,6 +134,7 @@ link_configs() {
     section "Symlinks"
     link_path "$SKETCHYBAR_DIR" "$HOME/.config/sketchybar"
     link_path "$BORDERS_DIR" "$HOME/.config/borders"
+    link_path "$AEROSPACE_DIR/scripts" "$HOME/.config/aerospace/scripts"
     link_path "$AEROSPACE_DIR/aerospace.toml" "$HOME/.aerospace.toml"
     link_path "$WM_DIR" "$HOME/.config/wm"
 }
