@@ -83,8 +83,16 @@ return {
       setup_lsp("marksman")
 
       -- Clangd (C/C++) - prefer Homebrew LLVM for CUDA support, fall back to system
-      local homebrew_clangd = "/opt/homebrew/opt/llvm/bin/clangd"
-      local clangd_cmd = vim.fn.executable(homebrew_clangd) == 1 and homebrew_clangd or "clangd"
+      local clangd_cmd = "clangd"
+      for _, candidate in ipairs({
+        "/opt/homebrew/opt/llvm/bin/clangd",
+        "/usr/local/opt/llvm/bin/clangd",
+      }) do
+        if vim.fn.executable(candidate) == 1 then
+          clangd_cmd = candidate
+          break
+        end
+      end
       setup_lsp("clangd", {
         cmd = { clangd_cmd },
       })
