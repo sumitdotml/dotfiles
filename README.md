@@ -93,14 +93,29 @@ This symlinks `~/.tmux.conf` to `tmux/vm.tmux.conf`, links `~/.tmux/scripts` to 
 
 ## CUDA LSP support (optional)
 
-If you're editing `.cu` files on a machine without the CUDA toolkit installed (e.g., a MacBook with no GPU like mine), clangd won't resolve CUDA identifiers like `cudaMalloc`, `__global__`, `threadIdx`, and so on. This script downloads the CUDA headers so clangd can provide proper diagnostics:
+This setup is for editing `.cu` files on macOS or Linux when a CUDA toolkit is not installed. It installs a header-only CUDA 12.8 tree under `~/.local/cuda`. This is enough for clangd analysis, but it does not provide `nvcc`, a CUDA runtime, or GPU execution. CUDA 12.8 is pinned because [Clang 22 marks it as the newest fully supported CUDA release](https://github.com/llvm/llvm-project/blob/llvmorg-22.1.1/clang/include/clang/Basic/Cuda.h).
+
+### 1. Install the headers
+
+On macOS, install Homebrew LLVM first. The editor configuration below explicitly selects its clangd instead of the Apple-provided binary.
 
 ```zsh
-./scripts/setup-cuda-headers.sh
 brew install llvm
+./scripts/setup-cuda-headers.sh
 ```
 
-Then add a `.clangd` file to your CUDA project:
+The script detects Intel and Arm machines, then downloads these packages from [NVIDIA's CUDA 12.8.2 redistribution](https://developer.download.nvidia.com/compute/cuda/redist/redistrib_12.8.2.json):
+
+- `cuda_cudart` 12.8.90
+- `cuda_nvcc` 12.8.93
+- `cuda_cccl` 12.8.90
+- `libcurand` 10.3.9.90
+
+Each archive is checked against NVIDIA's published SHA-256 hash. If `~/.local/cuda` contains an older header tree, the script preserves it in a timestamped backup before installing the new version.
+
+### 2. Configure clangd
+
+The installer prints the correct `.clangd` block for the current operating system. On macOS, use:
 
 ```yaml
 CompileFlags:
@@ -109,12 +124,33 @@ CompileFlags:
       --cuda-host-only,
       --cuda-path=/Users/<you>/.local/cuda,
       --cuda-gpu-arch=sm_75,
+      -Xclang,
+      -target-sdk-version=12.8,
     ]
 ```
 
-I tuned this neovim config to prefer Homebrew's clangd over Apple's when available just for this.
+The last two flags are macOS-only. They keep the macOS SDK version from replacing CUDA's SDK version inside Clang, which otherwise produces a false `cudaConfigureCall` diagnostic for `<<<...>>>` kernel launches.
+
+On Linux, omit `-Xclang` and `-target-sdk-version=12.8`. Point `--cuda-path` at `~/.local/cuda`, or at the real toolkit when one is installed.
+
+### 3. Configure the editor
+
+The Neovim config prefers Homebrew clangd from both Apple Silicon and Intel prefixes.
+
+For Cursor or VS Code, install the `llvm-vs-code-extensions.vscode-clangd` extension and set `clangd.path` to the result of:
+
+```zsh
+echo "$(brew --prefix llvm)/bin/clangd"
+```
+
+For example, Apple Silicon Homebrew uses:
+
+```json
+{
+  "clangd.path": "/opt/homebrew/opt/llvm/bin/clangd"
+}
+```
+
+Use one C/C++ diagnostics provider for CUDA files. In Cursor, add `cuda-cpp` to `cursor.cpp.disabledLanguages` when the bundled C/C++ extension is also enabled.
 
 Now you might be thinking: "Why do all this? Just write your code in Colab or SSH into a GPU instance?" Very good questions. Re the Colab thingy: I do this for nvcc compiling already! But I do not see real-time LSP warnings or errors there since it's just... a notebook for Python. Re the SSH thingy: when I'm SSH'd into a VM that has GPUs (which is honestly why I have the Linux GPU tmux config above), the CUDA LSP setup isn't really needed since I'm already on a real GPU machine. But I want it handy for the times I don't have a VM and just want to write or learn some GPU programming on my mac. Better than nothing, and basically covering all bases.
-
-> [!NOTE]
-> Known limitation: the `<<<>>>` kernel launch syntax still shows a false `cudaConfigureCall` error. Seems this is an [open LLVM bug](https://github.com/llvm/llvm-project/issues/86660); I tried my best to find a solution to suppress this, but at the moment my hands are empty. But all other CUDA diagnostics work correctly.
