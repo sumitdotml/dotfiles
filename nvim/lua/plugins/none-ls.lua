@@ -14,9 +14,9 @@ return {
 				require("none-ls.formatting.ruff"),   -- python
 				-- require("none-ls.diagnostics.ruff"),  -- python
 				null_ls.builtins.formatting.clang_format.with({
-					filetypes = { "c" },
-					extra_args = { "--style={BasedOnStyle: LLVM, ColumnLimit: 100}" },
-				}), -- c
+					filetypes = { "c", "cpp", "cuda" },
+					extra_args = { "--style=file" },
+				}),
 			},
 		})
 

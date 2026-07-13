@@ -2,6 +2,13 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-07-14
+
+### Changed
+
+- Standardized C, C++, and CUDA formatting at 150 columns, with editor rulers at 80, 120, and 150.
+- Added an installer-managed global clang-format configuration.
+
 ## 2026-06-28
 
 ### Added
