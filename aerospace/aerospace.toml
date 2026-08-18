@@ -9,7 +9,7 @@ exec-on-workspace-change = ['/bin/bash', '-c',
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
-accordion-padding = 12
+accordion-padding = 0
 default-root-container-layout = 'tiles'
 default-root-container-orientation = 'auto'
 persistent-workspaces = ["1", "2", "3", "4", "5"]
@@ -32,6 +32,11 @@ persistent-workspaces = ["1", "2", "3", "4", "5"]
     # keeping this lower because notched built-in displays already reserve menu bar space
     outer.top        = [{ monitor.'built-in' = 14 }, 46]
     outer.right      = [{ monitor.'built-in' = 10 }, 14]
+
+# Ghostty
+[[on-window-detected]]
+    if.app-id = 'com.mitchellh.ghostty'
+    run = 'layout accordion'
 
 # Cursor
 [[on-window-detected]]

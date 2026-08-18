@@ -7,6 +7,7 @@ All notable changes to this dotfiles repo are recorded here.
 ### Fixed
 
 - Switched Neovim Python formatting from Ruff lint autofixes to the Ruff formatter.
+- Kept Ghostty tabs aligned at full width under AeroSpace using a zero-padding accordion layout.
 
 ## 2026-07-14
 
