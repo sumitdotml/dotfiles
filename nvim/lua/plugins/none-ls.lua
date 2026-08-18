@@ -11,7 +11,7 @@ return {
 				null_ls.builtins.formatting.prettier,
 				null_ls.builtins.formatting.stylua,
 				require("none-ls.diagnostics.eslint_d"), --js, ts
-				require("none-ls.formatting.ruff"),   -- python
+				require("none-ls.formatting.ruff_format"), -- python
 				-- require("none-ls.diagnostics.ruff"),  -- python
 				null_ls.builtins.formatting.clang_format.with({
 					filetypes = { "c", "cpp", "cuda" },

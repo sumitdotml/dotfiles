@@ -2,6 +2,12 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-08-18
+
+### Fixed
+
+- Switched Neovim Python formatting from Ruff lint autofixes to the Ruff formatter.
+
 ## 2026-07-14
 
 ### Changed
