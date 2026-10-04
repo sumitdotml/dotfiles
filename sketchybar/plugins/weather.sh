@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 source "$CONFIG_DIR/colors.sh"
 
-weather_json=$(curl -s --max-time 5 "wttr.in/?format=j1")
-parsed=$(printf '%s' "$weather_json" | python3 -c '
+ip_json=$(curl -s --max-time 3 "ipinfo.io/json")
+ip_loc=$(printf '%s' "$ip_json" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("loc",""))' 2>/dev/null)
+ip_city=$(printf '%s' "$ip_json" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("city",""))' 2>/dev/null)
+ip_region=$(printf '%s' "$ip_json" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("region",""))' 2>/dev/null)
+
+weather_json=$(curl -s --max-time 5 "wttr.in/${ip_loc}?format=j1")
+parsed=$(printf '%s' "$weather_json" | IP_CITY="$ip_city" IP_REGION="$ip_region" python3 -c '
 import json
+import os
 import sys
 
 data = json.load(sys.stdin)
@@ -15,6 +21,10 @@ country = area.get("country", [{}])[0].get("value", "")
 region = area.get("region", [{}])[0].get("value", "")
 temp = current.get("temp_C", "")
 desc = current.get("weatherDesc", [{}])[0].get("value", "")
+
+if os.environ.get("IP_CITY"):
+    place = os.environ["IP_CITY"]
+    region = os.environ.get("IP_REGION", "")
 
 jp_places = {
     "Tokyo": "東京", "Osaka": "大阪", "Kyoto": "京都", "Yokohama": "横浜",

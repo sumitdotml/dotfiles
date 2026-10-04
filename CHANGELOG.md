@@ -2,6 +2,12 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-10-04
+
+### Fixed
+
+- Located the sketchybar weather widget by city-level IP geolocation, so it no longer falls back to a country-center point when wttr.in only resolves the country.
+
 ## 2026-08-18
 
 ### Fixed
