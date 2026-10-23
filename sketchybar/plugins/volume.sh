@@ -9,9 +9,9 @@ if [ "$muted" = "true" ]; then
 else
   case "$vol" in
     0)            icon="󰖁" color=$OVERLAY ;;
-    [1-9] | [1-3][0-9]) icon="󰕿" color=$TEAL ;;
-    [4-6][0-9])   icon="󰖀" color=$TEAL ;;
-    *)            icon="󰕾" color=$TEAL ;;
+    [1-9] | [1-3][0-9]) icon="󰕿" color=$SAPPHIRE ;;
+    [4-6][0-9])   icon="󰖀" color=$SAPPHIRE ;;
+    *)            icon="󰕾" color=$SAPPHIRE ;;
   esac
 fi
 

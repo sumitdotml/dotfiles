@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-source "$CONFIG_DIR/colors.sh"
 
 src=$("$CONFIG_DIR/helpers/inputsource" 2>/dev/null)
 
@@ -12,4 +11,4 @@ case "$src" in
   *) label="${src##*.}"; label="${label:0:2}" ;;
 esac
 
-sketchybar --set "$NAME" icon="󰗊" icon.color="$YELLOW" label="$label"
+sketchybar --set "$NAME" label="$label"

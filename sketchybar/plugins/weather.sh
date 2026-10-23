@@ -71,4 +71,4 @@ case "$cond" in
   *)                        icon="󰖐" ;;
 esac
 
-sketchybar --set "$NAME" icon="$icon" icon.color="$TEAL" label="$place ${temp// /}"
+sketchybar --set "$NAME" icon="$icon" icon.color="$SKY" label="$place ${temp// /}"

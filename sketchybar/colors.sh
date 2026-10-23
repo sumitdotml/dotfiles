@@ -22,9 +22,11 @@ export PEACH=0xfffab387
 export RED=0xfff38ba8
 export TEAL=0xff94e2d5
 
-# compact Waybar-style module colors
-export BAR_COLOR=0xee11111b
-export MODULE_BG=0xee313244
-export MODULE_BORDER=0xff45475a
-export WORKSPACE_BG=$MODULE_BG
-export ITEM_BG=$MODULE_BG
+export SAPPHIRE=0xff74c7ec
+
+# falling back to this tint when plugins/backdrop.sh can't render the glass
+export BAR_COLOR=0x9911111b
+export TEXT_SHADOW=0xcc11111b
+export WORKSPACE_DIM=0xd9cdd6f4
+# lifting lavender toward text for contrast on bright glass
+export APP_NAME=0xffbac4fc

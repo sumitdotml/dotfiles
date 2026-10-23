@@ -6,7 +6,6 @@ source "$CONFIG_DIR/colors.sh"
 
 FONT="JetBrainsMono Nerd Font"
 
-# flush top bar that occupies the macOS menu-bar row (one bar, not two)
 sketchybar --bar \
   height=37 \
   position=top \
@@ -14,90 +13,83 @@ sketchybar --bar \
   y_offset=0 \
   corner_radius=0 \
   border_width=0 \
-  blur_radius=30 \
+  blur_radius=40 \
   color=$BAR_COLOR \
   shadow=off \
   padding_left=10 \
   padding_right=10 \
   notch_width=200
 
+# lifting glyphs 1pt, since JetBrains Mono sits them below the bar's midline
 sketchybar --default \
   icon.font="$FONT:Bold:13.0" \
   icon.color=$TEXT \
-  label.font="$FONT:Medium:12.0" \
+  label.font="$FONT:SemiBold:12.0" \
   label.color=$TEXT \
-  background.corner_radius=13 \
-  background.height=27 \
-  background.border_width=0 \
-  background.border_color=$MODULE_BORDER \
+  icon.shadow.drawing=on \
+  icon.shadow.color=$TEXT_SHADOW \
+  icon.shadow.distance=1 \
+  icon.shadow.angle=90 \
+  label.shadow.drawing=on \
+  label.shadow.color=$TEXT_SHADOW \
+  label.shadow.distance=1 \
+  label.shadow.angle=90 \
+  background.drawing=off \
   padding_left=2 \
   padding_right=2 \
   icon.padding_left=7 \
   icon.padding_right=5 \
   label.padding_left=3 \
-  label.padding_right=7
+  label.padding_right=7 \
+  icon.y_offset=1 \
+  label.y_offset=1
 
-# ---------------- workspaces (AeroSpace) ----------------
-# constant-width pills so 1..5 are evenly spaced regardless of focus
 sketchybar --add event aerospace_workspace_change
 
-for sid in 1 2 3 4 5; do
+for sid in $(aerospace list-workspaces --all); do
   sketchybar --add item space.$sid left \
     --subscribe space.$sid aerospace_workspace_change \
     --set space.$sid \
-      icon="●" \
-      icon.font="$FONT:Bold:12.0" \
-      icon.padding_left=8 \
-      icon.padding_right=8 \
+      icon="$sid" \
+      icon.padding_left=6 \
+      icon.padding_right=6 \
       label.drawing=off \
-      background.drawing=off \
-      padding_left=1 \
-      padding_right=1 \
+      padding_left=0 \
+      padding_right=0 \
       click_script="aerospace workspace $sid" \
       script="$PLUGIN_DIR/aerospace.sh $sid"
 done
 
-sketchybar --add bracket spaces '/space\..*/' \
-  --set spaces \
-    background.drawing=on \
-    background.color=$WORKSPACE_BG \
-    background.border_width=0 \
-    background.corner_radius=13 \
-    background.height=27
-
-# ---------------- focused app ----------------
-sketchybar --add item front_app left \
-  --subscribe front_app front_app_switched \
+sketchybar --add item front_app q \
+  --subscribe front_app front_app_switched aerospace_workspace_change \
   --set front_app \
     icon.drawing=off \
-    label.color=$LAVENDER \
-    label.font="$FONT:Medium:12.0" \
-    background.drawing=off \
-    padding_left=10 \
+    label.color=$APP_NAME \
+    label.padding_left=0 \
+    label.padding_right=0 \
+    padding_right=16 \
     script="$PLUGIN_DIR/front_app.sh"
 
-# ---------------- right side (rightmost first) ----------------
-# Read-only status widgets: clock, battery, volume, language, weather.
-# Nothing here is clickable by design.
-sketchybar --add item clock right \
+sketchybar --add item clock e \
   --set clock \
-    icon="󰥔" \
-    icon.color=$BLUE \
-    background.drawing=off \
+    icon.drawing=off \
+    label.padding_left=0 \
+    label.padding_right=0 \
+    padding_left=16 \
     update_freq=10 \
     script="$PLUGIN_DIR/clock.sh"
 
+# status widgets are read-only; nothing here is clickable by design
 sketchybar --add item battery right \
   --subscribe battery power_source_change system_woke \
   --set battery \
-    background.drawing=off \
+    label.padding_right=4 \
     update_freq=60 \
     script="$PLUGIN_DIR/battery.sh"
 
 sketchybar --add item volume right \
   --subscribe volume volume_change \
   --set volume \
-    background.drawing=off \
     script="$PLUGIN_DIR/volume.sh"
 
 # language reflects the active input source instantly: inputsource-watch
@@ -106,23 +98,43 @@ sketchybar --add event language_change
 sketchybar --add item language right \
   --subscribe language language_change \
   --set language \
-    background.drawing=off \
+    icon.drawing=off \
+    label.padding_left=6 \
     update_freq=10 \
     script="$PLUGIN_DIR/language.sh"
 
+# spacing with item padding, since icon paddings don't apply to an image on an empty icon
+sketchybar --add item tailscale right \
+  --subscribe tailscale system_woke \
+  --set tailscale \
+    icon="" \
+    icon.width=11 \
+    icon.background.drawing=on \
+    icon.background.image="$CONFIG_DIR/icons/tailscale.png" \
+    icon.background.image.scale=0.5 \
+    padding_left=9 \
+    update_freq=5 \
+    script="$PLUGIN_DIR/tailscale.sh"
+
 sketchybar --add item weather right \
   --set weather \
-    background.drawing=off \
     update_freq=1800 \
     script="$PLUGIN_DIR/weather.sh"
 
-sketchybar --add bracket status weather language volume battery clock \
-  --set status \
-    background.drawing=on \
-    background.color=$MODULE_BG \
-    background.border_width=0 \
-    background.corner_radius=13 \
-    background.height=27
+sketchybar --add item layout left \
+  --subscribe layout display_change system_woke \
+  --set layout \
+    drawing=off \
+    script="$PLUGIN_DIR/layout.sh"
+
+# polling to catch wallpaper changes made outside apply-macos-theme.sh
+sketchybar --add event wallpaper_change
+sketchybar --add item glass left \
+  --subscribe glass wallpaper_change display_change system_woke \
+  --set glass \
+    drawing=off \
+    update_freq=300 \
+    script="$PLUGIN_DIR/backdrop.sh"
 
 # start the input-source watcher (replace any previous instance)
 pkill -f "$CONFIG_DIR/helpers/inputsource-watch" 2>/dev/null

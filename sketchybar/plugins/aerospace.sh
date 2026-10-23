@@ -2,10 +2,10 @@
 source "$CONFIG_DIR/colors.sh"
 
 FOCUSED=${FOCUSED_WORKSPACE:-$(aerospace list-workspaces --focused)}
+FONT="JetBrainsMono Nerd Font"
 
-# Waybar-style workspaces: equal-size dots, state carried by Catppuccin accents.
 if [ "$1" = "$FOCUSED" ]; then
-  sketchybar --set "$NAME" icon="●" icon.font="JetBrainsMono Nerd Font:Bold:14.0" icon.color="$SKY" background.drawing=off
+  sketchybar --set "$NAME" icon.color="$SKY" icon.font="$FONT:ExtraBold:13.0"
 else
-  sketchybar --set "$NAME" icon="●" icon.font="JetBrainsMono Nerd Font:Bold:14.0" icon.color="$OVERLAY" background.drawing=off
+  sketchybar --set "$NAME" icon.color="$WORKSPACE_DIM" icon.font="$FONT:SemiBold:13.0"
 fi

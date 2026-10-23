@@ -13,8 +13,8 @@ if [ -n "$charging" ]; then
   color=$GREEN
 else
   case "$pct" in
-    100 | 9[0-9]) icon="󰁹" color=$GREEN ;;
-    [678][0-9])   icon="󰂁" color=$GREEN ;;
+    100 | 9[0-9]) icon="󰁹" color=$BLUE ;;
+    [678][0-9])   icon="󰂁" color=$BLUE ;;
     [45][0-9])    icon="󰁾" color=$YELLOW ;;
     [23][0-9])    icon="󰁻" color=$PEACH ;;
     *)            icon="󰁺" color=$RED ;;
