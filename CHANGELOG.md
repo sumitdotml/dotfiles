@@ -2,6 +2,23 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-10-23
+
+### Added
+
+- Added a read-only Tailscale widget to sketchybar that shows the exit-node state.
+- Added a frosted-glass sketchybar background rendered from the current wallpaper, with a plain tint as fallback.
+- Added per-monitor workspace placement to sketchybar for a second display.
+
+### Changed
+
+- Redesigned sketchybar without pills, with workspace numerals, the app name and clock beside the notch, and cooler Catppuccin accents.
+- Dropped the clock and language icons and added a month and middle dot to the clock.
+
+### Fixed
+
+- Fixed sketchybar vertical alignment and spacing, including clipped Tailscale symbols.
+
 ## 2026-10-04
 
 ### Fixed

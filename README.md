@@ -66,6 +66,8 @@ Run:
 
 It symlinks the desktop configs from `sketchybar/`, `borders/`, `aerospace/`, and `wm/`, applies the daily wallpaper from `assets/macos-theme/landscapes/`, installs the wallpaper rotation LaunchAgent, backs up existing files before replacing them, restarts sketchybar and JankyBorders, and asks AeroSpace to reload its config.
 
+The Tailscale widget in the bar needs the `tailscale` CLI and `jq`. Next to the logo, `→` means the exit node is online, `!` means it's offline, `×` means Tailscale is disconnected, and `?` means the status couldn't be read. The frosted background is a blurred copy of the wallpaper made by `sketchybar/helpers/backdrop.swift`, and the bar falls back to a plain tint if that fails. With a second monitor, each bar shows its own workspaces.
+
 ---
 
 ## Linux GPU setup (optional)
