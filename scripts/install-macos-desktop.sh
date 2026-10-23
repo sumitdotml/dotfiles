@@ -96,12 +96,15 @@ compile_helper() {
         return 0
     fi
 
-    if ! command -v clang >/dev/null 2>&1; then
-        warn "clang not found; leaving $output unbuilt"
+    local compiler=clang
+    [[ "$source" == *.swift ]] && compiler=swiftc
+
+    if ! command -v "$compiler" >/dev/null 2>&1; then
+        warn "$compiler not found; leaving $output unbuilt"
         return 0
     fi
 
-    clang "$source" -o "$output" "$@" || warn "Could not build $output"
+    "$compiler" "$source" -o "$output" "$@" || warn "Could not build $output"
     if [ -x "$output" ]; then
         success "$output built"
     fi
@@ -119,6 +122,11 @@ prepare_helpers() {
         "$SKETCHYBAR_DIR/helpers/inputsource-watch.c" \
         "$SKETCHYBAR_DIR/helpers/inputsource-watch" \
         -framework Carbon
+
+    compile_helper \
+        "$SKETCHYBAR_DIR/helpers/backdrop.swift" \
+        "$SKETCHYBAR_DIR/helpers/backdrop" \
+        -O
 
     compile_helper \
         "$WM_DIR/menubar-autohide.c" \

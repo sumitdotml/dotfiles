@@ -31,6 +31,9 @@ image="${images[$(((today_epoch / 86400) % ${#images[@]}))]}"
 osascript -e "tell application \"System Events\" to tell every desktop to set picture to POSIX file \"$image\""
 echo "desktop wallpaper applied: $(basename "$image")"
 
+# re-rendering the bar's frosted glass for the new wallpaper
+command -v sketchybar >/dev/null 2>&1 && sketchybar --trigger wallpaper_change >/dev/null 2>&1 || true
+
 uuid=$(dscl . -read "/Users/$(whoami)" GeneratedUID | awk '{print $2}')
 lock_dir="/Library/Caches/Desktop Pictures/$uuid"
 
