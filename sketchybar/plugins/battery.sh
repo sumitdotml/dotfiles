@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 source "$CONFIG_DIR/colors.sh"
 
-pct=$(pmset -g batt | grep -Eo '\d+%' | cut -d% -f1)
-charging=$(pmset -g batt | grep 'AC Power')
+batt=$(pmset -g batt)
+pct=$(grep -Eo '[0-9]+%' <<< "$batt" | cut -d% -f1)
+charging=$(grep 'AC Power' <<< "$batt")
 
 if [ -z "$pct" ]; then
   exit 0

@@ -2,7 +2,7 @@
 // own blur barely softens a 37pt strip. Only wallpaper sits under the bar, so it matches.
 //
 // usage: backdrop <cache_dir> <bar_height_pt>
-// prints "<display> <png>" per display, or "<display> -" if the wallpaper can't be reproduced
+// prints "<display> <image scale> <png>" per display, or "<display> -" if the wallpaper can't be reproduced
 import AppKit
 import CoreImage
 
@@ -133,5 +133,5 @@ for (i, screen) in NSScreen.screens.enumerated() {
   for old in cached where old.hasPrefix("backdrop-\(n)-") && old != name {
     try? FileManager.default.removeItem(atPath: "\(cacheDir)/\(old)")
   }
-  print(n, path)
+  print(n, 1 / screen.backingScaleFactor, path)
 }

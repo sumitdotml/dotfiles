@@ -18,7 +18,7 @@ sketchybar --bar \
   shadow=off \
   padding_left=10 \
   padding_right=10 \
-  notch_width=200
+  notch_width=185
 
 # lifting glyphs 1pt, since JetBrains Mono sits them below the bar's midline
 sketchybar --default \
@@ -46,7 +46,8 @@ sketchybar --default \
 
 sketchybar --add event aerospace_workspace_change
 
-for sid in $(aerospace list-workspaces --all); do
+# capping the query, since AeroSpace's CLI can block for good while its server is busy
+for sid in $(perl -e 'alarm 2; exec @ARGV' aerospace list-workspaces --all); do
   sketchybar --add item space.$sid left \
     --subscribe space.$sid aerospace_workspace_change \
     --set space.$sid \
@@ -67,7 +68,7 @@ sketchybar --add item front_app q \
     label.color=$APP_NAME \
     label.padding_left=0 \
     label.padding_right=0 \
-    padding_right=16 \
+    padding_right=24 \
     script="$PLUGIN_DIR/front_app.sh"
 
 sketchybar --add item clock e \
@@ -75,7 +76,7 @@ sketchybar --add item clock e \
     icon.drawing=off \
     label.padding_left=0 \
     label.padding_right=0 \
-    padding_left=16 \
+    padding_left=24 \
     update_freq=10 \
     script="$PLUGIN_DIR/clock.sh"
 
@@ -83,6 +84,7 @@ sketchybar --add item clock e \
 sketchybar --add item battery right \
   --subscribe battery power_source_change system_woke \
   --set battery \
+    display=1 \
     label.padding_right=4 \
     update_freq=60 \
     script="$PLUGIN_DIR/battery.sh"
@@ -90,6 +92,7 @@ sketchybar --add item battery right \
 sketchybar --add item volume right \
   --subscribe volume volume_change \
   --set volume \
+    display=1 \
     script="$PLUGIN_DIR/volume.sh"
 
 # language reflects the active input source instantly: inputsource-watch
@@ -98,6 +101,7 @@ sketchybar --add event language_change
 sketchybar --add item language right \
   --subscribe language language_change \
   --set language \
+    display=1 \
     icon.drawing=off \
     label.padding_left=6 \
     update_freq=10 \
@@ -107,6 +111,7 @@ sketchybar --add item language right \
 sketchybar --add item tailscale right \
   --subscribe tailscale system_woke \
   --set tailscale \
+    display=1 \
     icon="" \
     icon.width=11 \
     icon.background.drawing=on \
@@ -118,6 +123,7 @@ sketchybar --add item tailscale right \
 
 sketchybar --add item weather right \
   --set weather \
+    display=1 \
     update_freq=1800 \
     script="$PLUGIN_DIR/weather.sh"
 

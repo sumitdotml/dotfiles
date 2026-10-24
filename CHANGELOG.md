@@ -2,6 +2,15 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-10-25
+
+### Fixed
+
+- Fixed sketchybar scripts hanging indefinitely when the AeroSpace CLI stopped responding.
+- Fixed the sketchybar glass background covering only half the bar on standard-density displays.
+- Fixed the sketchybar volume icon staying muted after a quick mute and unmute, and the app name turning lowercase after a reload.
+- Kept the last sketchybar weather reading through network failures, and fetched weather over HTTPS.
+
 ## 2026-10-23
 
 ### Added

@@ -10,9 +10,9 @@ keep=" "
 fallback=0
 [ -z "$output" ] && fallback=1
 
-while read -r n path; do
+while read -r n scale path; do
   [ -z "$n" ] && continue
-  if [ "$path" = "-" ]; then
+  if [ "$scale" = "-" ]; then
     fallback=1
     continue
   fi
@@ -25,10 +25,9 @@ while read -r n path; do
       --set "$item" width=0 padding_left=0 padding_right=0 \
         icon.drawing=off label.drawing=off \
         background.drawing=on background.color=0x00000000 \
-        background.height=$((height + 1)) background.padding_left=-$pad \
-        background.image.scale=0.5
+        background.height=$((height + 1)) background.padding_left=-$pad
   fi
-  args+=(--set "$item" display="$n" background.image="$path")
+  args+=(--set "$item" display="$n" background.image="$path" background.image.scale="$scale")
 done <<< "$output"
 
 for item in $(sketchybar --query bar | jq -r '.items[] | select(startswith("backdrop."))'); do

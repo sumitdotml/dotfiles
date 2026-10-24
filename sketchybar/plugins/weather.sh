@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 source "$CONFIG_DIR/colors.sh"
 
-ip_json=$(curl -s --max-time 3 "ipinfo.io/json")
+ip_json=$(curl -s --max-time 3 "https://ipinfo.io/json")
 ip_loc=$(printf '%s' "$ip_json" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("loc",""))' 2>/dev/null)
 ip_city=$(printf '%s' "$ip_json" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("city",""))' 2>/dev/null)
 ip_region=$(printf '%s' "$ip_json" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("region",""))' 2>/dev/null)
 
-weather_json=$(curl -s --max-time 5 "wttr.in/${ip_loc}?format=j1")
+weather_json=$(curl -s --max-time 5 "https://wttr.in/${ip_loc}?format=j1")
 parsed=$(printf '%s' "$weather_json" | IP_CITY="$ip_city" IP_REGION="$ip_region" python3 -c '
 import json
 import os
@@ -55,7 +55,8 @@ print("|".join([place, temp, desc]))
 IFS='|' read -r place temp cond <<< "$parsed"
 
 if [ -z "$temp" ]; then
-  sketchybar --set "$NAME" icon="󰖐" label="--"
+  # keeping the last reading through a network blip instead of blanking it until the next poll
+  sketchybar --query "$NAME" | grep -q "°" || sketchybar --set "$NAME" icon="󰖐" label="--"
   exit 0
 fi
 
