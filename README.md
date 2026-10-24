@@ -68,6 +68,8 @@ It symlinks the desktop configs from `sketchybar/`, `borders/`, `aerospace/`, an
 
 The bar needs `jq`, and the Tailscale widget also needs the `tailscale` CLI. Next to the logo, `→` means the exit node is online, `!` means it's offline, `×` means Tailscale is disconnected, and `?` means the status couldn't be read. The frosted background is a blurred copy of the wallpaper made by `sketchybar/helpers/backdrop.swift`, and the bar falls back to a plain tint if that fails. With a second monitor, each bar shows its own workspaces.
 
+Spotify's now-playing widget shows the album cover, then the song and its artists separated by a middle dot, after the workspaces on the main display, and hides when playback pauses or Spotify closes. It uses playback notifications, with a 30-second status check as a fallback. Spotify itself only reports the first artist, so the widget reads the full list, along with the cover, from the track's public page on open.spotify.com and remembers both for the last 200 songs. Songs without a cover, such as local files, show the Spotify logo alone. A song it hasn't seen yet takes about half a second to appear. Long titles scroll within a fixed width instead of being cut off, pausing for a moment at the start of each loop. macOS may request permission for SketchyBar to read Spotify through Automation.
+
 ---
 
 ## Linux GPU setup (optional)

@@ -4,6 +4,10 @@ All notable changes to this dotfiles repo are recorded here.
 
 ## 2026-10-25
 
+### Added
+
+- Added a Spotify now-playing widget to sketchybar that shows the album cover, lists every artist, and scrolls long titles.
+
 ### Fixed
 
 - Fixed sketchybar scripts hanging indefinitely when the AeroSpace CLI stopped responding.

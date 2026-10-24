@@ -61,6 +61,34 @@ for sid in $(perl -e 'alarm 2; exec @ARGV' aerospace list-workspaces --all); do
       script="$PLUGIN_DIR/aerospace.sh $sid"
 done
 
+# the logo is its own item so the cover (a 24px image from plugins/spotify.sh, shown at scale
+# 0.5) can sit between it and the song text
+sketchybar --add item spotify.logo left \
+  --set spotify.logo \
+    drawing=off \
+    display=1 \
+    icon="" \
+    icon.color=$GREEN \
+    icon.padding_right=8 \
+    label.drawing=off \
+    padding_left=10 \
+    padding_right=0
+
+sketchybar --add event spotify_change com.spotify.client.PlaybackStateChanged
+sketchybar --add item spotify left \
+  --subscribe spotify spotify_change system_woke \
+  --set spotify \
+    drawing=off \
+    display=1 \
+    icon="" \
+    icon.width=12 \
+    icon.background.drawing=on \
+    icon.background.image.scale=0.5 \
+    label.color=$SUBTEXT \
+    padding_left=0 \
+    update_freq=30 \
+    script="$PLUGIN_DIR/spotify.sh"
+
 sketchybar --add item front_app q \
   --subscribe front_app front_app_switched aerospace_workspace_change \
   --set front_app \
@@ -141,6 +169,9 @@ sketchybar --add item glass left \
     drawing=off \
     update_freq=300 \
     script="$PLUGIN_DIR/backdrop.sh"
+
+# stopping a Spotify title ticker left from the previous config, so it restarts cleanly
+pkill -f "$PLUGIN_DIR/spotify.sh --ticker" 2>/dev/null
 
 # start the input-source watcher (replace any previous instance)
 pkill -f "$CONFIG_DIR/helpers/inputsource-watch" 2>/dev/null
