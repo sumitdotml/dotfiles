@@ -2,6 +2,13 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-11-01
+
+### Changed
+
+- Renumbered AeroSpace workspaces by monitor, with 1–4 on the main display and 5–6 on the built-in one, and moved Spotify to workspace 5.
+- Sent Helium windows from the misc profile to their own workspace, 4, on the main display.
+
 ## 2026-10-25
 
 ### Added
