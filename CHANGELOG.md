@@ -8,6 +8,10 @@ All notable changes to this dotfiles repo are recorded here.
 
 - Added a Rex config ported from tmux, with a copy mode that opens scrollback in nvim and shortcuts for opening Claude Code or Codex.
 
+### Changed
+
+- Made AeroSpace's Alt+Enter open Rex instead of Ghostty.
+
 ## 2026-11-01
 
 ### Changed

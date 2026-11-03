@@ -83,7 +83,7 @@ persistent-workspaces = ["1", "2", "3", "4", "5", "6"]
     run = 'exec-and-forget "$HOME/.config/aerospace/scripts/follow-wispr-flow.sh" "$AEROSPACE_FOCUSED_WORKSPACE"'
 
 [mode.main.binding]
-    alt-enter = ['workspace 1', 'exec-and-forget open -a Ghostty']
+    alt-enter = ['workspace 1', 'exec-and-forget open -b com.superlogical.rex']
 
     alt-slash     = 'layout h_tiles'
     alt-backslash = 'layout v_tiles'
