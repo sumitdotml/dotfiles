@@ -6,19 +6,19 @@ I want to eventually consolidate my workflow to this; getting there. For chattin
 
 #
 
-Currently, I use Neovim, Ghostty, and tmux for my workflow.
+Currently, I use Neovim, Ghostty, and tmux for my workflow. Lately I've also been experimenting with [Rex](https://www.superlogical.com/rex), so I'm not solely relying on tmux anymore.
 
-![!ss1](/assets/screenshot1.png)
+![Neovim in Rex, tiled next to the Codex app by AeroSpace](/assets/ss0.png)
 
-![!ss2](/assets/screenshot2.png)
+![Telescope file finder with grep preview](/assets/ss1.png)
 
-![!ss3](/assets/screenshot3.png)
+![keybinds page in Helium](/assets/ss2.png)
 
 ---
 
 ## Installation
 
-**Note**: you need to have [Ghostty](https://ghostty.org/) installed before all these steps.
+**Note**: I use these dotfiles with [Ghostty](https://ghostty.org/) (and lately [Rex](https://www.superlogical.com/rex)), but other similar terminals should work fine too.
 
 1. Clone the repo
 
