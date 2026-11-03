@@ -91,7 +91,7 @@ local function shell_running(cmd, cwd)
   }
 end
 
-local AGENT_RATIO = 0.45
+local AGENT_RATIO = 0.35
 
 rex.action{
   name = "agent_tab",
@@ -208,11 +208,11 @@ rex.action{
 pre("[", "copy_mode")
 pre("g", "lazygit_popup")
 
--- opening the agent in a new tab on its letter, or splitting it in on the
--- left on shift+letter
+-- opening the agent in a new tab on its letter, splitting it in on the left
+-- on shift+letter, or opening an agent + nvim tab on w then the letter
 local AGENTS = { c = "claude", x = "codex" }
 for key, agent in pairs(AGENTS) do
   pre("a>" .. key, "agent_tab", { agent = agent })
   pre("a>shift+" .. key, "agent_split", { agent = agent })
+  pre("a>w>" .. key, "agent_workspace", { agent = agent })
 end
-pre("a>w", "agent_workspace")
