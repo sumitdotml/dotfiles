@@ -2,6 +2,12 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-11-03
+
+### Added
+
+- Added a Rex config ported from tmux, with a copy mode that opens scrollback in nvim and shortcuts for opening Claude Code or Codex.
+
 ## 2026-11-01
 
 ### Changed

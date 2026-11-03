@@ -48,6 +48,12 @@ chmod +x install.sh
 The installer is interactive and asks which dependencies and config symlinks you want to set up before changing anything. The optional config set includes a global `.clang-format` policy with a 150-column limit for C, C++, and CUDA.
 
 > [!NOTE]
+> The installer can link my [Rex](https://www.superlogical.com/rex) config, but it can't install Rex itself the way it installs Neovim. As of writing, Rex is invite-only, so you need access and Rex installed before linking the config. There are two ways to get it, both on the [installation page](https://www.superlogical.com/rex/docs/installation):
+>
+> 1. the macOS app
+> 2. the server for Linux or FreeBSD
+
+> [!NOTE]
 > If you want to use the [todo](./nvim/lua/modules/floatodo.lua) plugin, you will need to create a directory on the root of your project called `notes` and add a file called `todo.md` inside it (or wherever you want to store your todo list, but make sure to update the path in the plugin config).
 
 ![floatodo](/assets/floatodo.png)

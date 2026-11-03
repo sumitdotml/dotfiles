@@ -4,7 +4,7 @@ set -eo pipefail
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MIN_NVIM_VERSION="0.12.0"
 
-SYMLINK_COMPONENTS=(nvim tmux ghostty kitty vim clang-format)
+SYMLINK_COMPONENTS=(nvim tmux rex ghostty kitty vim clang-format)
 SELECTED_COMPONENTS=()
 
 if [ -t 1 ] && command -v tput >/dev/null 2>&1 && [ "$(tput colors 2>/dev/null || echo 0)" -ge 8 ]; then
@@ -89,6 +89,7 @@ component_label() {
         nvim) echo "Symlink Neovim config" ;;
         ghostty) echo "Symlink Ghostty config" ;;
         tmux) echo "Symlink tmux config" ;;
+        rex) echo "Symlink Rex config" ;;
         catppuccin) echo "tmux Catppuccin theme" ;;
         kitty) echo "Symlink Kitty config" ;;
         vim) echo "Symlink Vim config + install vim-plug" ;;
@@ -107,7 +108,7 @@ select_components() {
     fi
 
     if confirm "Set up config symlinks from this repo?" "y"; then
-        info "This includes Neovim, tmux, Ghostty, Kitty, Vim, and clang-format. zsh and cc are not linked by this installer."
+        info "This includes Neovim, tmux, Rex, Ghostty, Kitty, Vim, and clang-format. zsh and claude-code are not linked by this installer."
         for component in "${SYMLINK_COMPONENTS[@]}"; do
             if confirm "$(component_label "$component")?" "y"; then
                 SELECTED_COMPONENTS+=("$component")
@@ -566,6 +567,11 @@ install_tmux_config() {
     link_path "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 }
 
+install_rex_config() {
+    section "Rex"
+    link_path "$DOTFILES_DIR/rex/init.lua" "${XDG_CONFIG_HOME:-$HOME/.config}/rex/init.lua"
+}
+
 install_catppuccin_theme() {
     section "tmux Catppuccin"
     local theme_dir="$HOME/.config/tmux/plugins/catppuccin/tmux"
@@ -612,6 +618,7 @@ run_component() {
         nvim) install_nvim_config ;;
         ghostty) install_ghostty_config ;;
         tmux) install_tmux_config ;;
+        rex) install_rex_config ;;
         catppuccin) install_catppuccin_theme ;;
         kitty) install_kitty_config ;;
         vim) install_vim_config ;;
