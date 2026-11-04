@@ -89,7 +89,7 @@ component_label() {
         nvim) echo "Symlink Neovim config" ;;
         ghostty) echo "Symlink Ghostty config" ;;
         tmux) echo "Symlink tmux config" ;;
-        rex) echo "Symlink Rex config" ;;
+        rex) echo "Symlink Rex config + set up Rex's agent skill and hooks" ;;
         catppuccin) echo "tmux Catppuccin theme" ;;
         kitty) echo "Symlink Kitty config" ;;
         vim) echo "Symlink Vim config + install vim-plug" ;;
@@ -569,7 +569,18 @@ install_tmux_config() {
 
 install_rex_config() {
     section "Rex"
+    # falling back to the copy inside the Rex app, since rex is only on PATH in Rex's own terminals
+    local rex_bin
+    rex_bin="$(command -v rex)" || rex_bin="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
+
     link_path "$DOTFILES_DIR/rex/init.lua" "${XDG_CONFIG_HOME:-$HOME/.config}/rex/init.lua"
+
+    if [ ! -x "$rex_bin" ]; then
+        warn "Rex isn't installed, so skipping its agent skill and hooks. Run 'rex skill setup' after installing Rex."
+        return 0
+    fi
+
+    "$rex_bin" skill setup || warn "rex skill setup failed. Run it again once the error above is fixed."
 }
 
 install_catppuccin_theme() {
