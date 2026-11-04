@@ -2,6 +2,17 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-11-04
+
+### Added
+
+- Added a live Markdown view in Neovim: formatted text in the buffer you edit, bigger H1 to H3 headings with a GitHub-style line under H1 and H2, bold headings at every level, and inline images in Kitty, Ghostty and Rex that fill the text width. Lines with links wrap by what is on screen, and the cursor line shows the raw Markdown to edit. `Space m r` switches to source.
+- Added ImageMagick to the installer's dependencies, for images in Markdown files. Images bigger than 1920 px are shrunk before they are shown, so a page of large screenshots does not run Rex out of image memory.
+
+### Changed
+
+- Moved the file name, file type, diagnostics, pomo timer and search count from the top bar to the statusline, with the file name first and its folder dimmed after it.
+
 ## 2026-11-03
 
 ### Added

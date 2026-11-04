@@ -58,6 +58,9 @@ The installer is interactive and asks which dependencies and config symlinks you
 
 ![floatodo](/assets/floatodo.png)
 
+> [!NOTE]
+> Markdown files open in a live view: formatting shows inside the buffer you edit, and the raw Markdown comes back on the cursor line. `Space m r` switches between live and source. Bigger headings and inline images need a terminal with Kitty image placeholders (Kitty, Ghostty or Rex) and ImageMagick, which the installer offers. The bigger headings are drawn by a small Swift helper, so they also need macOS with the Command Line Tools. Neovim builds the helper on first use. Anywhere else, headings stay normal-size text.
+
 ---
 
 ## macOS desktop setup (optional)
