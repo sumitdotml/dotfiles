@@ -85,7 +85,7 @@ confirm() {
 
 component_label() {
     case "$1" in
-        deps) echo "Dependencies: Neovim >= ${MIN_NVIM_VERSION}, tmux, git, tree-sitter CLI" ;;
+        deps) echo "Dependencies: Neovim >= ${MIN_NVIM_VERSION}, tmux, git, tree-sitter CLI, ImageMagick" ;;
         nvim) echo "Symlink Neovim config" ;;
         ghostty) echo "Symlink Ghostty config" ;;
         tmux) echo "Symlink tmux config" ;;
@@ -535,12 +535,23 @@ link_path() {
     success "$target linked"
 }
 
+install_imagemagick_dependency() {
+    if command -v magick >/dev/null 2>&1 || command -v convert >/dev/null 2>&1; then
+        success "ImageMagick already installed"
+        return 0
+    fi
+
+    confirm "ImageMagick not found. Install it for images in Neovim Markdown buffers?" "y" || return 0
+    install_system_package "imagemagick"
+}
+
 install_deps() {
     section "Dependencies"
     install_neovim_with_version_check
     install_tmux_dependency
     install_git_dependency
     install_tree_sitter_cli
+    install_imagemagick_dependency
 }
 
 install_nvim_config() {
