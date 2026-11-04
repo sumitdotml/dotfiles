@@ -159,7 +159,12 @@ rex.action{
       focus = true,
       layout = rex.layout.block{
         flavor = SHELL,
-        options = { cwd = focused_cwd(ctx), command = { "lazygit" } },
+        -- returning focus to the pane this was opened from, since rex (as of
+        -- 2026-11-04) moves it to the right-most pane when the floating pane closes
+        options = {
+          cwd = focused_cwd(ctx),
+          command = { "sh", "-c", 'lazygit; rex focus -s "$1" "$2"', "lazygit", ctx.session_id, ctx.block_id },
+        },
       },
     }
     if err then error(err, 0) end
@@ -179,6 +184,7 @@ nvim -R -n "$f" -c 'file copy-mode' \
   -c 'set clipboard=unnamedplus title titlestring=copy\ mode' \
   -c 'nnoremap <buffer> q <cmd>qa!<cr>' \
   -c 'normal! G$'
+rex focus -s "$1" "$2"
 ]]
 
 rex.action{
