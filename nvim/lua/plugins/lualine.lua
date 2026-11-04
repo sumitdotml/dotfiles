@@ -22,9 +22,43 @@ return {
       },
       sections = {
         lualine_a = { "mode" },
-        lualine_b = { "branch", "diff" },
-        lualine_c = { "filename" },
-        lualine_x = { "progress" },
+        lualine_b = { "branch", "diff", "diagnostics" },
+        lualine_c = {
+          {
+            "filename",
+            separator = "",
+            symbols = { modified = "●", readonly = "", unnamed = "[No Name]", newfile = "" },
+          },
+          {
+            -- showing the folder dimmed after the name, relative to cwd or ~
+            function()
+              local dir = vim.fn.fnamemodify(vim.fn.expand("%:p:h"), ":~:.")
+              if dir == "." or vim.fn.expand("%") == "" then return "" end
+              if #dir <= 30 then return dir end
+              -- keeping the trailing folders that fit in about 30 characters
+              local parts, tail = vim.split(dir, "/", { trimempty = true }), ""
+              for i = #parts, 1, -1 do
+                local next = parts[i] .. (tail == "" and "" or "/" .. tail)
+                if #next > 28 then break end
+                tail = next
+              end
+              return "…/" .. (tail ~= "" and tail or parts[#parts]:sub(-28))
+            end,
+            color = "Comment",
+          },
+        },
+        lualine_x = {
+          function()
+            local ok, pomo = pcall(require, "pomo")
+            if not ok then return "" end
+            local timer = pomo.get_first_to_finish()
+            if timer == nil then return "" end
+            local icon = (timer.name == "Work") and "󰔛" or "󰒲"
+            return icon .. " " .. tostring(timer)
+          end,
+          "searchcount",
+          "filetype",
+        },
         lualine_y = { "os.date('%a %b %d %H:%M')" },
         lualine_z = { "location" },
       },
@@ -37,30 +71,7 @@ return {
         lualine_z = {},
       },
       tabline = {},
-      winbar = {
-        lualine_a = {},
-        lualine_b = {
-          {
-            "filename",
-            path = 1,
-          },
-        },
-        lualine_c = {},
-        lualine_x = {
-          function()
-            local ok, pomo = pcall(require, "pomo")
-            if not ok then return "" end
-            local timer = pomo.get_first_to_finish()
-            if timer == nil then return "" end
-            local icon = (timer.name == "Work") and "󰔛" or "󰒲"
-            return icon .. " " .. tostring(timer)
-          end,
-          "searchcount",
-          "diagnostics",
-        },
-        lualine_y = { "filetype" },
-        lualine_z = {},
-      },
+      winbar = {},
       inactive_winbar = {},
       extensions = {},
     })
