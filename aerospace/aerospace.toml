@@ -54,6 +54,12 @@ persistent-workspaces = ["1", "2", "3", "4", "5", "6"]
     if.app-id = 'com.openai.codex'
     run = 'move-node-to-workspace 1'
 
+# Rex
+# sending new windows to workspace 1 even if focus has moved off it by the time they open
+[[on-window-detected]]
+    if.app-id = 'com.superlogical.rex'
+    run = 'move-node-to-workspace --focus-follows-window 1'
+
 # Spotify
 [[on-window-detected]]
     if.app-id = 'com.spotify.client'
