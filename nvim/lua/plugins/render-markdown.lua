@@ -37,6 +37,8 @@ return {
 				cursorline = { default = vim.o.cursorline, rendered = false },
 				-- reserving the sign column so the first git sign does not shift the text right
 				signcolumn = { default = vim.o.signcolumn, rendered = "yes" },
+				-- keeping Ctrl-Y from sticking below the lines markdown-reflow hangs above a row
+				smoothscroll = { default = vim.o.smoothscroll, rendered = true },
 			},
 		})
 
