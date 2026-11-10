@@ -67,6 +67,7 @@ pre("shift+/", "client.palette.toggle") -- ?
 pre("r", "client.config.reload")
 pre("/", "client.find.open")
 pre("shift+s", "client.sidebar.activity.toggle")
+pre("m", "client.host.switch") -- m for machine: this Mac or a remote host
 
 local SHELL = "com.superlogical.terminal.shell"
 
