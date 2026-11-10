@@ -2,6 +2,14 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-11-10
+
+### Added
+
+- Added a Claude Code statusline, symlinked to `~/.claude/statusline.sh`, showing the folder, model, context and what is left of the plan: 5-hour and weekly limits on Pro, Max or Ultra, and usage credits on Enterprise.
+
+  ![Claude Code statusline on Pro and Enterprise](/assets/claude-statusline.png)
+
 ## 2026-11-04
 
 ### Added
