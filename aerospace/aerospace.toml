@@ -65,6 +65,11 @@ persistent-workspaces = ["1", "2", "3", "4", "5", "6"]
     if.app-id = 'com.spotify.client'
     run = 'move-node-to-workspace 5'
 
+# YouTube Music
+[[on-window-detected]]
+    if.app-id = 'com.github.th-ch.youtube-music'
+    run = 'move-node-to-workspace 5'
+
 # Helium (misc profile)
 # matching on the title, since Helium appends the profile name to it when there are several profiles,
 # so replacing "misc" with another profile's name sends that profile's windows to workspace 4 instead
