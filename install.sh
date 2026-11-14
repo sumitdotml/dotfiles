@@ -4,7 +4,7 @@ set -eo pipefail
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MIN_NVIM_VERSION="0.12.0"
 
-SYMLINK_COMPONENTS=(nvim tmux rex ghostty kitty vim clang-format)
+SYMLINK_COMPONENTS=(nvim tmux rex ghostty kitty vim clang-format cc)
 SELECTED_COMPONENTS=()
 
 if [ -t 1 ] && command -v tput >/dev/null 2>&1 && [ "$(tput colors 2>/dev/null || echo 0)" -ge 8 ]; then
@@ -94,6 +94,7 @@ component_label() {
         kitty) echo "Symlink Kitty config" ;;
         vim) echo "Symlink Vim config + install vim-plug" ;;
         clang-format) echo "Symlink global clang-format config" ;;
+        cc) echo "Symlink Claude Code statusline" ;;
         *) echo "$1" ;;
     esac
 }
@@ -108,7 +109,7 @@ select_components() {
     fi
 
     if confirm "Set up config symlinks from this repo?" "y"; then
-        info "This includes Neovim, tmux, Rex, Ghostty, Kitty, Vim, and clang-format. zsh and claude-code are not linked by this installer."
+        info "This includes Neovim, tmux, Rex, Ghostty, Kitty, Vim, clang-format, and the Claude Code statusline. zsh and the rest of Claude Code's config are not linked by this installer."
         for component in "${SYMLINK_COMPONENTS[@]}"; do
             if confirm "$(component_label "$component")?" "y"; then
                 SELECTED_COMPONENTS+=("$component")
@@ -634,6 +635,12 @@ install_clang_format_config() {
     link_path "$DOTFILES_DIR/clang-format/.clang-format" "$HOME/.clang-format"
 }
 
+install_cc_config() {
+    section "Claude Code"
+    # linking only the statusline, since Claude Code and Rex rewrite settings.json
+    link_path "$DOTFILES_DIR/cc/statusline.sh" "$HOME/.claude/statusline.sh"
+}
+
 run_component() {
     case "$1" in
         deps) install_deps ;;
@@ -645,6 +652,7 @@ run_component() {
         kitty) install_kitty_config ;;
         vim) install_vim_config ;;
         clang-format) install_clang_format_config ;;
+        cc) install_cc_config ;;
         *) die "Unknown component '$1'" ;;
     esac
 }
