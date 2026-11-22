@@ -2,6 +2,16 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-11-22
+
+### Added
+
+- Added an Antigravity CLI statusline, symlinked to `~/.gemini/antigravity-cli/statusline.sh` by `install.sh`. It shows the same layout as Claude Code, with 5-hour and weekly quotas plus Vim mode and cycle mode on the line below.
+
+### Changed
+
+- Moved the shared statusline layout code into `agents/statusline-lib.sh` so Claude Code and Antigravity CLI share it while parsing their own inputs, and added the CLI version to both.
+
 ## 2026-11-10
 
 ### Added
