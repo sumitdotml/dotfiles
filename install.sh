@@ -94,8 +94,8 @@ component_label() {
         kitty) echo "Symlink Kitty config" ;;
         vim) echo "Symlink Vim config + install vim-plug" ;;
         clang-format) echo "Symlink global clang-format config" ;;
-        cc) echo "Symlink Claude Code statusline" ;;
-        agy) echo "Symlink Antigravity CLI statusline" ;;
+        cc) echo "Symlink Claude Code statusline + share skills with the second account" ;;
+        agy) echo "Symlink Antigravity CLI statusline + Claude skills" ;;
         *) echo "$1" ;;
     esac
 }
@@ -110,7 +110,7 @@ select_components() {
     fi
 
     if confirm "Set up config symlinks from this repo?" "y"; then
-        info "This includes Neovim, tmux, Rex, Ghostty, Kitty, Vim, clang-format, and the Claude Code and Antigravity CLI statuslines. zsh and the rest of Claude Code's config are not linked by this installer."
+        info "This includes Neovim, tmux, Rex, Ghostty, Kitty, Vim, clang-format, and the Claude Code and Antigravity CLI statuslines and skills. zsh and the rest of Claude Code's config are not linked by this installer."
         for component in "${SYMLINK_COMPONENTS[@]}"; do
             if confirm "$(component_label "$component")?" "y"; then
                 SELECTED_COMPONENTS+=("$component")
@@ -638,14 +638,20 @@ install_clang_format_config() {
 
 install_cc_config() {
     section "Claude Code"
-    # linking only the statusline, since Claude Code and Rex rewrite settings.json
+    # linking the statusline but not settings.json, since Claude Code and Rex rewrite it
     link_path "$DOTFILES_DIR/cc/statusline.sh" "$HOME/.claude/statusline.sh"
+    # sharing skills with the second account, which claude.zsh runs from ~/.claude-second
+    link_path "$HOME/.claude/skills" "$HOME/.claude-second/skills"
 }
 
 install_agy_config() {
     section "Antigravity CLI"
-    # linking only the statusline, since Antigravity manages settings.json itself
+    # linking the statusline but not settings.json, since Antigravity manages it itself
     link_path "$DOTFILES_DIR/agy/statusline.sh" "$HOME/.gemini/antigravity-cli/statusline.sh"
+    link_path "$HOME/.claude/skills" "$HOME/.gemini/skills"
+    info "Still manual: install Antigravity (curl -fsSL https://antigravity.google/cli/install.sh | bash),"
+    info "run /statusline ~/.gemini/antigravity-cli/statusline.sh inside it once,"
+    info "and add alias agy='agy --mode=accept-edits' to ~/.zshrc."
 }
 
 run_component() {
