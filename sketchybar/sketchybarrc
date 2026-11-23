@@ -46,8 +46,14 @@ sketchybar --default \
 
 sketchybar --add event aerospace_workspace_change
 
-# capping the query, since AeroSpace's CLI can block for good while its server is busy
-for sid in $(perl -e 'alarm 2; exec @ARGV' aerospace list-workspaces --all); do
+# capping the query, since AeroSpace's CLI can block for good while its server is busy;
+# retrying for up to ~20s, since at login sketchybar can start before AeroSpace is up
+for _ in $(seq 1 10); do
+  SPACES=$(perl -e 'alarm 2; exec @ARGV' aerospace list-workspaces --all 2>/dev/null)
+  [ -n "$SPACES" ] && break
+  sleep 2
+done
+for sid in $SPACES; do
   sketchybar --add item space.$sid left \
     --subscribe space.$sid aerospace_workspace_change \
     --set space.$sid \
