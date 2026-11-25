@@ -11,7 +11,7 @@ source "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/../agents/statusline-lib
 eval "$(jq -r "$JQ_FMT"'
   def b_used: if .remaining_fraction == null then "" else ((1 - .remaining_fraction) * 100 | pct) end;
   def b_at: if .reset_in_seconds == null then "" else (now + .reset_in_seconds | floor | tostring) end;
-  (if (.model.id // "") | test("gemini"; "i") then "gemini" else "3p" end) as $p
+  (if (.model.id // "") | test("gemini|orchestrator"; "i") then "gemini" else "3p" end) as $p
   | (.quota["\($p)-5h"] // {}) as $h5
   | (.quota["\($p)-weekly"] // {}) as $d7
   | @sh "MODEL=\(.model.display_name // .model.id // "?" | sub(" \\([^)]*\\)$"; ""))",
