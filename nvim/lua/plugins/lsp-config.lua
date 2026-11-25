@@ -75,8 +75,24 @@ return {
         },
       })
 
-      -- Python (Pyright for LSP features + Ruff for linting)
-      setup_lsp("pyright")
+      -- Python (basedpyright for LSP features + Ruff for linting)
+      -- basedpyright replaced pyright, which sends no inlay hints. It still shows no hint
+      -- for positional-only parameters such as range(stop), and has no setting for that.
+      setup_lsp("basedpyright", {
+        settings = {
+          basedpyright = {
+            analysis = {
+              -- Same as Vim's coc-settings.json. basedpyright's default, "recommended", is much stricter
+              typeCheckingMode = "basic",
+              inlayHints = {
+                callArgumentNames = true,
+                variableTypes = false,
+                functionReturnTypes = false,
+              },
+            },
+          },
+        },
+      })
       setup_lsp("ruff")
 
       -- Markdown
@@ -121,6 +137,13 @@ return {
       })
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {
         desc = "Show code actions",
+      })
+
+      vim.lsp.inlay_hint.enable(true)
+      vim.keymap.set("n", "<leader>th", function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      end, {
+        desc = "Toggle inlay hints",
       })
     end,
   },
