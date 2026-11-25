@@ -145,6 +145,46 @@ return {
       end, {
         desc = "Toggle inlay hints",
       })
+
+      -- Highlight other uses of the symbol under the cursor once the cursor rests for
+      -- 'updatetime' ms (CursorHold), the same way coc does it in Vim
+      vim.g.reference_highlight = true
+      local reference_group = vim.api.nvim_create_augroup("lsp-reference-highlight", { clear = true })
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = reference_group,
+        callback = function(args)
+          local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+          -- Some servers, such as ruff, can't find references. A buffer with only those
+          -- would show a "method not supported" error on every CursorHold.
+          if not client:supports_method("textDocument/documentHighlight", args.buf) then
+            return
+          end
+          -- Clearing first, so a second server or :LspRestart doesn't add duplicate autocmds
+          vim.api.nvim_clear_autocmds({ group = reference_group, buffer = args.buf })
+          vim.api.nvim_create_autocmd("CursorHold", {
+            group = reference_group,
+            buffer = args.buf,
+            callback = function()
+              if vim.g.reference_highlight then
+                vim.lsp.buf.document_highlight()
+              end
+            end,
+          })
+          vim.api.nvim_create_autocmd("CursorMoved", {
+            group = reference_group,
+            buffer = args.buf,
+            callback = function()
+              vim.lsp.buf.clear_references()
+            end,
+          })
+        end,
+      })
+      vim.keymap.set("n", "<leader>tr", function()
+        vim.g.reference_highlight = not vim.g.reference_highlight
+        vim.lsp.buf.clear_references()
+      end, {
+        desc = "Toggle highlighting other uses of the symbol under the cursor",
+      })
     end,
   },
 }

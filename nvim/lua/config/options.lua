@@ -29,3 +29,7 @@ vim.opt.colorcolumn = "80,120,150" -- Default for all filetypes
 -- Cursor line highlighting
 vim.opt.cursorline = true        -- Enable cursor line highlighting
 vim.opt.cursorlineopt = "number" -- Highlight only the line number, not the whole line
+
+-- Delay before CursorHold fires (default 4000 ms)
+-- Kept short so the symbol highlight in lsp-config.lua shows up quickly
+vim.opt.updatetime = 300
