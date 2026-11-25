@@ -2,6 +2,17 @@
 
 All notable changes to this dotfiles repo are recorded here.
 
+## 2026-11-25
+
+### Added
+
+- Added inlay hints in Neovim, the grey parameter names the language server shows inside function calls, for Python, TypeScript, C, C++ and CUDA. `Space t h` turns them on and off. CUDA files need a `.clangd` that points at a CUDA install.
+- Added highlighting of every other use of the symbol under the cursor once the cursor rests for 300 ms, the same as coc does in Vim. `Space t r` turns it on and off.
+
+### Changed
+
+- Switched Neovim's Python language server from pyright to basedpyright, because pyright sends no inlay hints. It is installed with `uv tool install basedpyright`, since Mason's install fails to set up pip under Python 3.14. Type checking stays at `basic`, as in Vim. basedpyright shows no hint for positional-only parameters such as `range(stop)`, which Vim's coc-pyright does show.
+
 ## 2026-11-22
 
 ### Added
